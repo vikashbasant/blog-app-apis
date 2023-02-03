@@ -33,41 +33,29 @@ public class DeleteUser implements UserService {
     }
 
     @Override
-    public <T> Response executeService (T t) {
+    public <T> Response executeService (T t) throws GeneralException {
 
         log.info("===: DeleteUser:: Inside ExecuteService Method :===");
 
         Integer userId = (Integer) t;
 
-        try {
 
-            Optional<User> byId = Optional.ofNullable(userRepo.findById(userId).orElseThrow(() -> new GeneralException("USER_500", "User Not " +
-                    "Found", "Record Not Found")));
+        Optional<User> byId = Optional.ofNullable(userRepo.findById(userId).orElseThrow(() -> new GeneralException("User Not " +
+                "Found With UserId = " + userId)));
 
-            userRepo.deleteById(userId);
+        userRepo.deleteById(userId);
 
-            userResponseDTO.setId(byId.get().getId());
-            userResponseDTO.setName(byId.get().getName());
-            userResponseDTO.setEmail(byId.get().getEmail());
-            userResponseDTO.setPassword(byId.get().getPassword());
-            userResponseDTO.setAbout(byId.get().getAbout());
+        userResponseDTO.setId(byId.get().getId());
+        userResponseDTO.setName(byId.get().getName());
+        userResponseDTO.setEmail(byId.get().getEmail());
+        userResponseDTO.setPassword(byId.get().getPassword());
+        userResponseDTO.setAbout(byId.get().getAbout());
 
-            response.setStatus("SUCCESS");
-            response.setStatusCode("200");
-            response.setMessage("Successfully Delete The User With UserId = " + userId);
-            response.setData(userResponseDTO);
+        response.setStatus("SUCCESS");
+        response.setStatusCode("200");
+        response.setMessage("Successfully Delete The User With UserId = " + userId);
+        response.setData(userResponseDTO);
 
-        } catch (GeneralException e) {
-
-            if(e instanceof GeneralException){
-
-                response.setStatus("FAILURE");
-                response.setStatusCode(e.getStatusCode());
-                response.setMessage(e.getMessage());
-                response.setErrorMessage(e.getErrorMessages());
-
-            }
-        }
 
         return response;
     }

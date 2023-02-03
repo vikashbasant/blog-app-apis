@@ -34,42 +34,30 @@ public class UpdateUser implements UserService {
 
 
     @Override
-    public <T> Response executeService (T t) {
+    public <T> Response executeService (T t) throws GeneralException {
 
         log.info("===: UpdateUser:: Inside ExecuteService Method :===");
 
         UserDTO uDTO = (UserDTO) t;
 
-        try {
 
-            Optional<User> byId = Optional.ofNullable(userRepo.findById(uDTO.getUserId()).orElseThrow(() -> new GeneralException(
-                    "USER_500",
-                    "User is not Present for this UserId = " + uDTO.getUserId(), "User Not Found")));
+        Optional.ofNullable(userRepo.findById(uDTO.getUserId()).orElseThrow(() -> new GeneralException(
+                "User Not Found With UserId = " + uDTO.getUserId())));
 
-            userRepo.updateId(uDTO.getUserId(), uDTO.getName(), uDTO.getEmail(), uDTO.getPassword(), uDTO.getAbout());
+        userRepo.updateId(uDTO.getUserId(), uDTO.getName(), uDTO.getEmail(), uDTO.getPassword(), uDTO.getAbout());
 
 
-            userResponseDTO.setId(uDTO.getUserId());
-            userResponseDTO.setName(uDTO.getName());
-            userResponseDTO.setEmail(uDTO.getEmail());
-            userResponseDTO.setPassword(uDTO.getPassword());
-            userResponseDTO.setAbout(uDTO.getAbout());
+        userResponseDTO.setId(uDTO.getUserId());
+        userResponseDTO.setName(uDTO.getName());
+        userResponseDTO.setEmail(uDTO.getEmail());
+        userResponseDTO.setPassword(uDTO.getPassword());
+        userResponseDTO.setAbout(uDTO.getAbout());
 
-            response.setStatus("SUCCESS");
-            response.setStatusCode("200");
-            response.setMessage("Successfully Update the User with UserId = " + uDTO.getUserId());
-            response.setData(userResponseDTO);
+        response.setStatus("SUCCESS");
+        response.setStatusCode("200");
+        response.setMessage("Successfully Update the User with UserId = " + uDTO.getUserId());
+        response.setData(userResponseDTO);
 
-        } catch (GeneralException e) {
-
-            if(e instanceof GeneralException){
-                response.setStatus("FAILURE");
-                response.setStatusCode(e.getStatusCode());
-                response.setMessage(e.getMessage());
-                response.setErrorMessage(e.getErrorMessages());
-
-            }
-        }
 
         return response;
 

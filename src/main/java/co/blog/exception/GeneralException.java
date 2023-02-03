@@ -7,21 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class GeneralException extends Exception{
-    private String statusCode;
-    private String message;
-    private transient Object errorMessages;
-
-    public GeneralException (String errorCode, String message, String errorMessages){
-        this.statusCode = errorCode;
-        this.message = message;
-        this.errorMessages = errorMessages;
+public class GeneralException extends Exception {
+    public GeneralException (String message) {
+        super(message);
     }
 
-
-    public GeneralException (String errorCode, String message){
-        this.statusCode = errorCode;
-        this.message = message;
+    public GeneralException (String message, Throwable throwable) {
+        super(message, throwable);
     }
 
 }

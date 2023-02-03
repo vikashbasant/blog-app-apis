@@ -3,7 +3,6 @@ package co.blog.service.userImpl;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.UserDTO;
 import co.blog.payloads.UserResponseDTO;
 import co.blog.repository.UserRepo;
 import co.blog.util.userUtil.UserService;
@@ -33,39 +32,28 @@ public class GetSingleUser implements UserService {
     }
 
     @Override
-    public <T> Response executeService (T t) {
+    public <T> Response executeService (T t) throws GeneralException {
 
         log.info("===: GetSingleUser:: Inside ExecuteService Method :===");
 
         Integer userId = (Integer) t;
 
-        try {
 
-            Optional<User> byId = Optional.ofNullable(userRepo.findById(userId).orElseThrow(() -> new GeneralException("USER_500", "User is " +
-                    "not Present for this UserId = " + userId, "User Not Found")));
+        Optional<User> byId =
+                Optional.ofNullable(userRepo.findById(userId).orElseThrow(() -> new GeneralException("User Not " +
+                        "Found With This UserId = " + userId)));
 
-            userResponseDTO.setId(byId.get().getId());
-            userResponseDTO.setName(byId.get().getName());
-            userResponseDTO.setEmail(byId.get().getEmail());
-            userResponseDTO.setPassword(byId.get().getPassword());
-            userResponseDTO.setAbout(byId.get().getAbout());
+        userResponseDTO.setId(byId.get().getId());
+        userResponseDTO.setName(byId.get().getName());
+        userResponseDTO.setEmail(byId.get().getEmail());
+        userResponseDTO.setPassword(byId.get().getPassword());
+        userResponseDTO.setAbout(byId.get().getAbout());
 
-            response.setStatus("SUCCESS");
-            response.setStatusCode("200");
-            response.setMessage("Successfully Fetch The User With UserId = " + byId.get().getId());
-            response.setData(userResponseDTO);
+        response.setStatus("SUCCESS");
+        response.setStatusCode("200");
+        response.setMessage("Successfully Fetch The User With UserId = " + byId.get().getId());
+        response.setData(userResponseDTO);
 
-        } catch (GeneralException e) {
-
-            if(e instanceof GeneralException){
-
-                response.setStatus("FAILURE");
-                response.setStatusCode(e.getStatusCode());
-                response.setMessage(e.getMessage());
-                response.setErrorMessage(e.getErrorMessages());
-
-            }
-        }
 
         return response;
     }

@@ -1,5 +1,6 @@
 package co.blog.controller;
 
+import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.UserDTO;
 import co.blog.util.userUtil.UserService;
@@ -22,7 +23,7 @@ public class UserController {
     private UserServiceFactory factory;
 
     @PostMapping("/create")
-    public ResponseEntity<Response> createUser(@RequestBody @Valid UserDTO request) {
+    public ResponseEntity<Response> createUser (@RequestBody @Valid UserDTO request) throws GeneralException {
         log.info("===: UserController:: Inside createUser Method :===");
         UserService service = factory.getService(UserServiceType.CREATE_USER);
         Response response = service.executeService(request);
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Response> updateUser(@RequestBody @Valid UserDTO request) {
+    public ResponseEntity<Response> updateUser (@RequestBody @Valid UserDTO request) throws GeneralException {
         log.info("===: UserController:: Inside updateUser Method :===");
         UserService service = factory.getService(UserServiceType.UPDATE_USER);
         Response response = service.executeService(request);
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/get-user/{userId}")
-    public ResponseEntity<Response> getUser(@PathVariable @Valid Integer userId) {
+    public ResponseEntity<Response> getUser (@PathVariable @Valid Integer userId) throws GeneralException {
         log.info("===: UserController:: Inside getUser Method :===");
         UserService service = factory.getService(UserServiceType.GET_USER_BY_ID);
         Response response = service.executeService(userId);
@@ -46,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/get-all-user")
-    public ResponseEntity<Response> getAllUsers() {
+    public ResponseEntity<Response> getAllUsers () throws GeneralException {
         log.info("===: UserController:: Inside getAllUsers Method :===");
         UserService service = factory.getService(UserServiceType.GET_ALL_USER);
         Response response = service.executeService("");
@@ -56,7 +57,7 @@ public class UserController {
 
 
     @DeleteMapping("/delete-user/{userId}")
-    public ResponseEntity<Response> deleteUser(@PathVariable("userId") @Valid Integer uId) {
+    public ResponseEntity<Response> deleteUser (@PathVariable("userId") @Valid Integer uId) throws GeneralException {
         log.info("===: UserController:: Inside deleteUser Method :===");
         UserService service = factory.getService(UserServiceType.DELETE_USER);
         Response response = service.executeService(uId);

@@ -18,11 +18,11 @@ public class UserServiceFactory {
         actionSet.forEach(this::createAction);
     }
 
-    private void createAction(UserService service) {
+    private void createAction (UserService service) {
         serviceMap.put(service.getServiceType(), service);
     }
 
-    public UserService getService(UserServiceType type) {
+    public UserService getService (UserServiceType type) {
         return Optional.ofNullable(serviceMap.get(type))
                 .orElseThrow(() -> new RuntimeException("Action (" + type + ") is not implemented yet"));
     }
