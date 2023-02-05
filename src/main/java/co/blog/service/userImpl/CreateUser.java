@@ -8,6 +8,7 @@ import co.blog.repository.UserRepo;
 import co.blog.util.userUtil.UserService;
 import co.blog.util.userUtil.UserServiceType;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,10 @@ public class CreateUser implements UserService {
     private Response response;
 
     @Autowired
-    private UserResponseDTO userResponseDTO;
+    private ModelMapper modelMapper;
+
+    @Autowired
+    private UserResponseDTO uResponseDTO;
 
     @Override
     public UserServiceType getServiceType () {
@@ -36,28 +40,50 @@ public class CreateUser implements UserService {
 
         UserDTO uDTO = (UserDTO) t;
 
+        /*----Convert userDto into user:----*/
+        User user = this.userDtoToUser(uDTO);
+
+        /*----Save User into DB:----*/
+        User sUser = userRepo.save(user);
+
+        /*----Convert User to UserResponseDTO:----*/
+        uResponseDTO = this.userToUserResponseDTO(sUser);
+
+        /*----Simply Return The Response----*/
+        response.setStatus("SUCCESS");
+        response.setStatusCode("200");
+        response.setMessage("User Created Successfully");
+        response.setData(uResponseDTO);
+        
+        return response;
+
+
+    }
+
+
+    public User userDtoToUser(UserDTO uDTO) {
+
+        /*
         User user = new User();
         user.setId(uDTO.getId());
         user.setName(uDTO.getName());
         user.setEmail(uDTO.getEmail());
         user.setPassword(uDTO.getPassword());
         user.setAbout(uDTO.getAbout());
+         */
+        User user = this.modelMapper.map(uDTO, User.class);
+        return user;
+    }
 
-        User saveUser = userRepo.save(user);
-
+    public UserResponseDTO userToUserResponseDTO(User user) {
+        /*
         userResponseDTO.setId(saveUser.getId());
         userResponseDTO.setName(saveUser.getName());
         userResponseDTO.setEmail(saveUser.getEmail());
         userResponseDTO.setPassword(saveUser.getPassword());
         userResponseDTO.setAbout(saveUser.getAbout());
-
-
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
-        response.setMessage("User Created Successfully");
-        response.setData(userResponseDTO);
-        return response;
-
-
+         */
+        UserResponseDTO uResponseDTO = this.modelMapper.map(user, UserResponseDTO.class);
+        return uResponseDTO;
     }
 }

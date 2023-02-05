@@ -8,6 +8,7 @@ import co.blog.repository.UserRepo;
 import co.blog.util.userUtil.UserService;
 import co.blog.util.userUtil.UserServiceType;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,12 @@ public class GetAllUser implements UserService {
     @Autowired
     private Response response;
 
+    @Autowired
+    private UserResponseDTO uResponseDTO;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
 
     @Override
     public UserServiceType getServiceType () {
@@ -35,25 +42,25 @@ public class GetAllUser implements UserService {
 
         log.info("===: GetAllUser:: Inside ExecuteService Method :===");
 
-
+        /*----Find All The Record Of User----*/
         List<User> allUser = userRepo.findAll();
 
+        /*----If Record Is Empty Then Simply Throw Exception----*/
         if (allUser.isEmpty()) {
             throw new GeneralException("No Record Found!");
         }
 
+        /*----Create ArrayList Of UserResponseDTO----*/
         List<UserResponseDTO> listOfUser = new ArrayList<>();
 
+        /*----Fetch One User At A Time, Put Into ArrayList----*/
         allUser.forEach(user -> {
-            UserResponseDTO uDTO = new UserResponseDTO();
-            uDTO.setId(user.getId());
-            uDTO.setName(user.getName());
-            uDTO.setEmail(user.getEmail());
-            uDTO.setPassword(user.getPassword());
-            uDTO.setAbout(user.getAbout());
-            listOfUser.add(uDTO);
+            /*----Convert User into UserResponseDTO:----*/
+            uResponseDTO = this.modelMapper.map(user,UserResponseDTO.class);
+            listOfUser.add(uResponseDTO);
         });
 
+        /*----Now Simply Return Response----*/
         response.setStatus("SUCCESS");
         response.setStatusCode("200");
         response.setMessage("Successfully Fetch All The Record");

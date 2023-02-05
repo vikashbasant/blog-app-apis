@@ -8,6 +8,7 @@ import co.blog.repository.UserRepo;
 import co.blog.util.userUtil.UserService;
 import co.blog.util.userUtil.UserServiceType;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,10 @@ public class GetSingleUser implements UserService {
     private Response response;
 
     @Autowired
-    private UserResponseDTO userResponseDTO;
+    private UserResponseDTO uResponseDTO;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public UserServiceType getServiceType () {
@@ -38,21 +42,19 @@ public class GetSingleUser implements UserService {
 
         Integer userId = (Integer) t;
 
-
+        /*----Fetch User With UserId----*/
         Optional<User> byId =
                 Optional.ofNullable(userRepo.findById(userId).orElseThrow(() -> new GeneralException("User Not " +
                         "Found With This UserId = " + userId)));
 
-        userResponseDTO.setId(byId.get().getId());
-        userResponseDTO.setName(byId.get().getName());
-        userResponseDTO.setEmail(byId.get().getEmail());
-        userResponseDTO.setPassword(byId.get().getPassword());
-        userResponseDTO.setAbout(byId.get().getAbout());
+        /*----Convert User into UserResponseDTO:----*/
+        uResponseDTO = this.modelMapper.map(byId.get(), UserResponseDTO.class);
 
+        /*----Simply Return The Response----*/
         response.setStatus("SUCCESS");
         response.setStatusCode("200");
         response.setMessage("Successfully Fetch The User With UserId = " + byId.get().getId());
-        response.setData(userResponseDTO);
+        response.setData(uResponseDTO);
 
 
         return response;

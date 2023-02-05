@@ -71,7 +71,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
     public ResponseEntity generalException (GeneralException gExcp) {
         log.info("===: ExceptionController:: Inside generalException Method :===");
         String message = gExcp.getMessage();
-        return new ResponseEntity(getResponse(message, "USER_500"), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(getResponse(message, "USER_400"), HttpStatus.BAD_REQUEST);
     }
 
 
