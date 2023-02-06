@@ -12,7 +12,7 @@ public class BlogAppApisApplication {
         SpringApplication.run(BlogAppApisApplication.class, args);
     }
 
-    /*----Uses ModelMapper----*/
+    /*----Now We Can Uses ModelMapper In Our Project----*/
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
