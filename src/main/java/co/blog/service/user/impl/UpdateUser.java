@@ -1,9 +1,9 @@
-package co.blog.service.userImpl;
+package co.blog.service.user.impl;
 
-import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.UserResponseDTO;
+import co.blog.payloads.uDTO.UserDTO;
+import co.blog.payloads.uDTO.UserResponseDTO;
 import co.blog.repository.UserRepo;
 import co.blog.util.userUtil.UserService;
 import co.blog.util.userUtil.UserServiceType;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class GetSingleUser implements UserService {
+public class UpdateUser implements UserService {
 
     @Autowired
     private UserRepo userRepo;
@@ -30,33 +30,39 @@ public class GetSingleUser implements UserService {
     @Autowired
     private ModelMapper modelMapper;
 
+
     @Override
     public UserServiceType getServiceType () {
-        return UserServiceType.GET_USER_BY_ID;
+        return UserServiceType.UPDATE_USER;
     }
+
 
     @Override
     public <T> Response executeService (T t) throws GeneralException {
 
-        log.info("===: GetSingleUser:: Inside ExecuteService Method :===");
+        log.info("===: UpdateUser:: Inside ExecuteService Method :===");
 
-        Integer userId = (Integer) t;
+        UserDTO uDTO = (UserDTO) t;
 
-        /*----Fetch User With UserId----*/
-        Optional<User> byId =
-                Optional.ofNullable(userRepo.findById(userId).orElseThrow(() -> new GeneralException("User Not " +
-                        "Found With This UserId = " + userId)));
+        /*----First Find The User With userId----*/
+        Optional.ofNullable(userRepo.findById(uDTO.getUserId()).orElseThrow(() -> new GeneralException(
+                "User Not Found With UserId = " + uDTO.getUserId())));
 
-        /*----Convert User into UserResponseDTO:----*/
-        uResponseDTO = this.modelMapper.map(byId.get(), UserResponseDTO.class);
+        /*----Then Simply Update The User----*/
+        userRepo.updateId(uDTO.getUserId(), uDTO.getName(), uDTO.getEmail(), uDTO.getPassword(), uDTO.getAbout());
+
+        /*----Convert The uDTO to UserResponseDTO----*/
+        uResponseDTO = this.modelMapper.map(uDTO, UserResponseDTO.class);
+        uResponseDTO.setId(uDTO.getUserId());
 
         /*----Simply Return The Response----*/
         response.setStatus("SUCCESS");
         response.setStatusCode("200");
-        response.setMessage("Successfully Fetch The User With UserId = " + byId.get().getId());
+        response.setMessage("Successfully Update The User With UserId = " + uDTO.getUserId());
         response.setData(uResponseDTO);
 
 
         return response;
+
     }
 }

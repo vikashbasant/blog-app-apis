@@ -1,9 +1,9 @@
-package co.blog.service.userImpl;
+package co.blog.service.user.impl;
 
 import co.blog.entity.User;
 import co.blog.payloads.Response;
-import co.blog.payloads.UserDTO;
-import co.blog.payloads.UserResponseDTO;
+import co.blog.payloads.uDTO.UserDTO;
+import co.blog.payloads.uDTO.UserResponseDTO;
 import co.blog.repository.UserRepo;
 import co.blog.util.userUtil.UserService;
 import co.blog.util.userUtil.UserServiceType;
@@ -54,7 +54,7 @@ public class CreateUser implements UserService {
         response.setStatusCode("200");
         response.setMessage("User Created Successfully");
         response.setData(uResponseDTO);
-        
+
         return response;
 
 

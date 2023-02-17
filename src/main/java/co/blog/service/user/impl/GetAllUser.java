@@ -1,9 +1,9 @@
-package co.blog.service.userImpl;
+package co.blog.service.user.impl;
 
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.UserResponseDTO;
+import co.blog.payloads.uDTO.UserResponseDTO;
 import co.blog.repository.UserRepo;
 import co.blog.util.userUtil.UserService;
 import co.blog.util.userUtil.UserServiceType;

@@ -2,7 +2,7 @@ package co.blog.controller;
 
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.UserDTO;
+import co.blog.payloads.uDTO.UserDTO;
 import co.blog.util.userUtil.UserService;
 import co.blog.util.userUtil.UserServiceFactory;
 import co.blog.util.userUtil.UserServiceType;
@@ -59,7 +59,7 @@ public class UserController {
     @GetMapping("/get-user/{userId}")
     public ResponseEntity<Response> getUser (@PathVariable @Valid Integer userId) throws GeneralException {
         log.info("===: UserController:: Inside getUser Method :===");
-        UserService service = factory.getService(UserServiceType.GET_USER_BY_ID);
+        UserService service = factory.getService(UserServiceType.GET_USER);
         Response response = service.executeService(userId);
         return ResponseEntity.ok(response);
     }

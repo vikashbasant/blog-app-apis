@@ -1,4 +1,4 @@
-package co.blog.payloads;
+package co.blog.payloads.uDTO;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
