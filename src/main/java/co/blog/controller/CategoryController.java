@@ -6,8 +6,6 @@ import co.blog.payloads.cDTO.CategoryDTO;
 import co.blog.util.categoryUtil.CategoryService;
 import co.blog.util.categoryUtil.CategoryServiceFactory;
 import co.blog.util.categoryUtil.CategoryServiceType;
-import co.blog.util.userUtil.UserService;
-import co.blog.util.userUtil.UserServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -74,7 +72,7 @@ public class CategoryController {
      */
     @GetMapping("/get-all-category")
     public ResponseEntity<Response> getAllUsers () throws GeneralException {
-        log.info("===: UserController:: Inside getAllUsers Method :===");
+        log.info("===: CategoryController:: Inside getAllUsers Method :===");
         CategoryService service = factory.getService(CategoryServiceType.GET_ALL_CATEGORY);
         Response response = service.executeService("");
         return ResponseEntity.ok(response);

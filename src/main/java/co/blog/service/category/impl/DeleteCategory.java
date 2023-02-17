@@ -4,7 +4,6 @@ import co.blog.entity.Category;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.cDTO.CategoryResponseDTO;
-import co.blog.payloads.uDTO.UserResponseDTO;
 import co.blog.repository.CategoryRepo;
 import co.blog.util.categoryUtil.CategoryService;
 import co.blog.util.categoryUtil.CategoryServiceType;

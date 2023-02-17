@@ -1,7 +1,6 @@
 package co.blog.service.category.impl;
 
 import co.blog.entity.Category;
-import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.cDTO.CategoryResponseDTO;
