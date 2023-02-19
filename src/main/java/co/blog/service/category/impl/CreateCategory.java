@@ -6,8 +6,8 @@ import co.blog.payloads.Response;
 import co.blog.payloads.cDTO.CategoryDTO;
 import co.blog.payloads.cDTO.CategoryResponseDTO;
 import co.blog.repository.CategoryRepo;
-import co.blog.util.categoryUtil.CategoryService;
-import co.blog.util.categoryUtil.CategoryServiceType;
+import co.blog.util.BlogService;
+import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class CreateCategory implements CategoryService {
+public class CreateCategory implements BlogService {
 
     @Autowired
     private CategoryRepo cRepo;
@@ -31,12 +31,12 @@ public class CreateCategory implements CategoryService {
     private CategoryResponseDTO cResponseDTO;
 
     @Override
-    public CategoryServiceType getServiceType () {
-        return CategoryServiceType.CREATE_CATEGORY;
+    public BlogServiceType getServiceType () {
+        return BlogServiceType.CREATE_CATEGORY;
     }
 
     @Override
-    public <T> Response executeService (T t) throws GeneralException {
+    public <T, U> Response executeService (T t, U u) throws GeneralException {
 
         log.info("===: CreateUser:: Inside ExecuteService Method :===");
 

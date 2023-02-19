@@ -31,5 +31,5 @@ public class UserDTO {
     @Size(max = 500, message = "About maximum 500 character are allowed")
     private String about;
 
-    private int userId;
+
 }

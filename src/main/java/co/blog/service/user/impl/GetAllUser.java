@@ -3,23 +3,21 @@ package co.blog.service.user.impl;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.cDTO.CategoryResponseDTO;
 import co.blog.payloads.uDTO.UserResponseDTO;
 import co.blog.repository.UserRepo;
-import co.blog.util.userUtil.UserService;
-import co.blog.util.userUtil.UserServiceType;
+import co.blog.util.BlogService;
+import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class GetAllUser implements UserService {
+public class GetAllUser implements BlogService {
 
     @Autowired
     private UserRepo userRepo;
@@ -28,19 +26,16 @@ public class GetAllUser implements UserService {
     private Response response;
 
     @Autowired
-    private UserResponseDTO uResponseDTO;
-
-    @Autowired
     private ModelMapper modelMapper;
 
 
     @Override
-    public UserServiceType getServiceType () {
-        return UserServiceType.GET_ALL_USER;
+    public BlogServiceType getServiceType () {
+        return BlogServiceType.GET_ALL_USER;
     }
 
     @Override
-    public <T> Response executeService (T t) throws GeneralException {
+    public <T, U> Response executeService (T t, U u) throws GeneralException {
 
         log.info("===: GetAllUser:: Inside ExecuteService Method :===");
 

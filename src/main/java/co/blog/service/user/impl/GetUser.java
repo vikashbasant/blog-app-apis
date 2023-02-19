@@ -5,8 +5,8 @@ import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.uDTO.UserResponseDTO;
 import co.blog.repository.UserRepo;
-import co.blog.util.userUtil.UserService;
-import co.blog.util.userUtil.UserServiceType;
+import co.blog.util.BlogService;
+import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class GetUser implements UserService {
+public class GetUser implements BlogService {
 
     @Autowired
     private UserRepo userRepo;
@@ -31,12 +31,12 @@ public class GetUser implements UserService {
     private ModelMapper modelMapper;
 
     @Override
-    public UserServiceType getServiceType () {
-        return UserServiceType.GET_USER;
+    public BlogServiceType getServiceType () {
+        return BlogServiceType.GET_USER;
     }
 
     @Override
-    public <T> Response executeService (T t) throws GeneralException {
+    public <T, U> Response executeService (T t, U u) throws GeneralException {
 
         log.info("===: GetSingleUser:: Inside ExecuteService Method :===");
 
@@ -53,7 +53,7 @@ public class GetUser implements UserService {
         /*----Simply Return The Response----*/
         response.setStatus("SUCCESS");
         response.setStatusCode("200");
-        response.setMessage("Successfully Fetch The User With UserId = " + byId.get().getId());
+        response.setMessage("Successfully Fetch The User With UserId = " + userId);
         response.setData(uResponseDTO);
 
 

@@ -1,20 +1,23 @@
 package co.blog.service.category.impl;
 
+import co.blog.entity.Category;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.cDTO.CategoryDTO;
 import co.blog.payloads.cDTO.CategoryResponseDTO;
 import co.blog.repository.CategoryRepo;
-import co.blog.util.categoryUtil.CategoryService;
-import co.blog.util.categoryUtil.CategoryServiceType;
+import co.blog.util.BlogService;
+import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
-public class UpdateCategory implements CategoryService {
+public class UpdateCategory implements BlogService {
 
     @Autowired
     private CategoryRepo cRepo;
@@ -30,26 +33,29 @@ public class UpdateCategory implements CategoryService {
 
 
     @Override
-    public CategoryServiceType getServiceType () {
-        return CategoryServiceType.UPDATE_CATEGORY;
+    public BlogServiceType getServiceType () {
+        return BlogServiceType.UPDATE_CATEGORY;
     }
 
     @Override
-    public <T> Response executeService (T t) throws GeneralException {
+    public <T, U> Response executeService (T t, U u) throws GeneralException {
 
         log.info("===: UpdateCategory:: Inside ExecuteService Method :===");
 
         CategoryDTO cDTO = (CategoryDTO) t;
+        Integer categoryId = (Integer) u;
 
         /*----First Find The Category With CategoryId----*/
-        cRepo.findById(cDTO.getCategoryId()).orElseThrow(() -> new GeneralException(
+        cRepo.findById(categoryId).orElseThrow(() -> new GeneralException(
                 "Category Not Found With CategoryId = " + cDTO.getCategoryId()));
 
         /*----Then Simply Update The User----*/
-        cRepo.updateId(cDTO.getCategoryId(), cDTO.getCategoryDescription(), cDTO.getCategoryTitle());
+        cRepo.updateId(categoryId, cDTO.getCategoryDescription(), cDTO.getCategoryTitle());
+
+        Optional<Category> updatedCategory = cRepo.findById(categoryId);
 
         /*----Convert cDTO to CategoryResponseDTO----*/
-        cResponseDTO = this.modelMapper.map(cDTO, CategoryResponseDTO.class);
+        cResponseDTO = this.modelMapper.map(updatedCategory, CategoryResponseDTO.class);
 
         /*----Simply Return The Response----*/
         response.setStatus("SUCCESS");

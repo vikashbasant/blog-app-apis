@@ -5,8 +5,8 @@ import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.cDTO.CategoryResponseDTO;
 import co.blog.repository.CategoryRepo;
-import co.blog.util.categoryUtil.CategoryService;
-import co.blog.util.categoryUtil.CategoryServiceType;
+import co.blog.util.BlogService;
+import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class DeleteCategory implements CategoryService {
+public class DeleteCategory implements BlogService {
 
     @Autowired
     private CategoryRepo cRepo;
@@ -32,16 +32,16 @@ public class DeleteCategory implements CategoryService {
 
 
     @Override
-    public CategoryServiceType getServiceType () {
-        return CategoryServiceType.DELETE_CATEGORY;
+    public BlogServiceType getServiceType () {
+        return BlogServiceType.DELETE_CATEGORY;
     }
 
     @Override
-    public <T> Response executeService (T t) throws GeneralException {
+    public <T, U> Response executeService (T t, U u) throws GeneralException {
 
         log.info("===: DeleteCategory:: Inside ExecuteService Method :===");
 
-        Integer  categoryId = (Integer) t;
+        Integer categoryId = (Integer) t;
 
         /*----Before delete the Category, Fetch the Category:----*/
         Optional<Category> byCategoryId =

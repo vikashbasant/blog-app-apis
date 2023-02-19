@@ -5,8 +5,8 @@ import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.uDTO.UserResponseDTO;
 import co.blog.repository.UserRepo;
-import co.blog.util.userUtil.UserService;
-import co.blog.util.userUtil.UserServiceType;
+import co.blog.util.BlogService;
+import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class DeleteUser implements UserService {
+public class DeleteUser implements BlogService {
 
     @Autowired
     private UserRepo userRepo;
@@ -32,12 +32,12 @@ public class DeleteUser implements UserService {
 
 
     @Override
-    public UserServiceType getServiceType () {
-        return UserServiceType.DELETE_USER;
+    public BlogServiceType getServiceType () {
+        return BlogServiceType.DELETE_USER;
     }
 
     @Override
-    public <T> Response executeService (T t) throws GeneralException {
+    public <T, U> Response executeService (T t, U u) throws GeneralException {
 
         log.info("===: DeleteUser:: Inside ExecuteService Method :===");
 

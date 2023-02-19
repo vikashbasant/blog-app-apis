@@ -1,12 +1,13 @@
 package co.blog.service.user.impl;
 
 import co.blog.entity.User;
+import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.uDTO.UserDTO;
 import co.blog.payloads.uDTO.UserResponseDTO;
 import co.blog.repository.UserRepo;
-import co.blog.util.userUtil.UserService;
-import co.blog.util.userUtil.UserServiceType;
+import co.blog.util.BlogService;
+import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class CreateUser implements UserService {
+public class CreateUser implements BlogService {
 
     @Autowired
     private UserRepo userRepo;
@@ -29,13 +30,12 @@ public class CreateUser implements UserService {
     private UserResponseDTO uResponseDTO;
 
     @Override
-    public UserServiceType getServiceType () {
-        return UserServiceType.CREATE_USER;
+    public BlogServiceType getServiceType () {
+        return BlogServiceType.CREATE_USER;
     }
 
     @Override
-    public <T> Response executeService (T t) {
-
+    public <T, U> Response executeService (T t, U u) throws GeneralException {
         log.info("===: CreateUser:: Inside ExecuteService Method :===");
 
         UserDTO uDTO = (UserDTO) t;
@@ -86,4 +86,6 @@ public class CreateUser implements UserService {
         UserResponseDTO uResponseDTO = this.modelMapper.map(user, UserResponseDTO.class);
         return uResponseDTO;
     }
+
+
 }

@@ -1,0 +1,40 @@
+package co.blog.entity;
+
+import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+@Data
+@Table(name = " posts")
+public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "postId")
+    private Integer id;
+
+    @Column(name = "postTitle", nullable = false, length = 100)
+    private String postTitle;
+
+    @Column(name = "postContent", nullable = false, length = 1000)
+    private String postContent;
+
+    @Column(name = "postImageName")
+    private String imageName;
+
+    @Column(name = "postAddedDate")
+    private Date addedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+
+
+}

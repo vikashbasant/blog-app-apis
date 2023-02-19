@@ -3,9 +3,9 @@ package co.blog.controller;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.uDTO.UserDTO;
-import co.blog.util.userUtil.UserService;
-import co.blog.util.userUtil.UserServiceFactory;
-import co.blog.util.userUtil.UserServiceType;
+import co.blog.util.BlogService;
+import co.blog.util.BlogServiceFactory;
+import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,9 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    private UserServiceFactory factory;
+    private BlogServiceFactory factory;
+
+
 
     /**
      * For Create User API Here @Valid Annotation used for Enable the Validation:
@@ -31,8 +33,8 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<Response> createUser (@RequestBody @Valid UserDTO request) throws GeneralException {
         log.info("===: UserController:: Inside createUser Method :===");
-        UserService service = factory.getService(UserServiceType.CREATE_USER);
-        Response response = service.executeService(request);
+        BlogService service = factory.getService(BlogServiceType.CREATE_USER);
+        Response response = service.executeService(request, "");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -42,11 +44,11 @@ public class UserController {
      * @return UserResponseDTO
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
-    @PutMapping("/update")
-    public ResponseEntity<Response> updateUser (@RequestBody @Valid UserDTO request) throws GeneralException {
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<Response> updateUser (@RequestBody @Valid UserDTO request, @PathVariable @Valid Integer userId) throws GeneralException {
         log.info("===: UserController:: Inside updateUser Method :===");
-        UserService service = factory.getService(UserServiceType.UPDATE_USER);
-        Response response = service.executeService(request);
+        BlogService service = factory.getService(BlogServiceType.UPDATE_USER);
+        Response response = service.executeService(request, userId);
         return ResponseEntity.ok(response);
     }
 
@@ -59,8 +61,8 @@ public class UserController {
     @GetMapping("/get-user/{userId}")
     public ResponseEntity<Response> getUser (@PathVariable @Valid Integer userId) throws GeneralException {
         log.info("===: UserController:: Inside getUser Method :===");
-        UserService service = factory.getService(UserServiceType.GET_USER);
-        Response response = service.executeService(userId);
+        BlogService service = factory.getService(BlogServiceType.GET_USER);
+        Response response = service.executeService(userId, "");
         return ResponseEntity.ok(response);
     }
 
@@ -72,8 +74,8 @@ public class UserController {
     @GetMapping("/get-all-user")
     public ResponseEntity<Response> getAllUsers () throws GeneralException {
         log.info("===: UserController:: Inside getAllUsers Method :===");
-        UserService service = factory.getService(UserServiceType.GET_ALL_USER);
-        Response response = service.executeService("");
+        BlogService service = factory.getService(BlogServiceType.GET_ALL_USER);
+        Response response = service.executeService("", "");
         return ResponseEntity.ok(response);
 
     }
@@ -88,8 +90,8 @@ public class UserController {
     @DeleteMapping("/delete-user/{userId}")
     public ResponseEntity<Response> deleteUser (@PathVariable("userId") @Valid Integer uId) throws GeneralException {
         log.info("===: UserController:: Inside deleteUser Method :===");
-        UserService service = factory.getService(UserServiceType.DELETE_USER);
-        Response response = service.executeService(uId);
+        BlogService service = factory.getService(BlogServiceType.DELETE_USER);
+        Response response = service.executeService(uId, "");
         return ResponseEntity.ok(response);
     }
 

@@ -6,8 +6,8 @@ import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.cDTO.CategoryResponseDTO;
 import co.blog.repository.CategoryRepo;
-import co.blog.util.categoryUtil.CategoryService;
-import co.blog.util.categoryUtil.CategoryServiceType;
+import co.blog.util.BlogService;
+import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class GetCategory implements CategoryService {
+public class GetCategory implements BlogService {
 
     @Autowired
     private CategoryRepo cRepo;
@@ -32,12 +32,12 @@ public class GetCategory implements CategoryService {
     private ModelMapper modelMapper;
 
     @Override
-    public CategoryServiceType getServiceType () {
-        return CategoryServiceType.GET_CATEGORY;
+    public BlogServiceType getServiceType () {
+        return BlogServiceType.GET_CATEGORY;
     }
 
     @Override
-    public <T> Response executeService (T t) throws GeneralException {
+    public <T, U> Response executeService (T t, U u) throws GeneralException {
 
         log.info("====: GetCategory:: Inside executeService Method :====");
 
@@ -53,7 +53,7 @@ public class GetCategory implements CategoryService {
         /*----Simply Return The Response----*/
         response.setStatus("SUCCESS");
         response.setStatusCode("200");
-        response.setMessage("Successfully Fetch The Category With CategoryId = " + category.get().getCategoryId());
+        response.setMessage("Successfully Fetch The Category With CategoryId = " + categoryId);
         response.setData(cResponseDTO);
 
 
