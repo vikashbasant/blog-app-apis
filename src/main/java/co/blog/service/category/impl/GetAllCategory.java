@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -49,15 +50,8 @@ public class GetAllCategory implements CategoryService {
             throw new GeneralException("No Record Found!");
         }
 
-        /*----Create ArrayList Of CategoryResponseDTO----*/
-        List<CategoryResponseDTO> listOfCategory = new ArrayList<>();
-
-        /*----Fetch One User At A Time, Put Into ArrayList----*/
-        allCategory.forEach(category -> {
-            /*----Convert User into CategoryResponseDTO:----*/
-            cResponseDTO = this.modelMapper.map(category,CategoryResponseDTO.class);
-            listOfCategory.add(cResponseDTO);
-        });
+        /*----Fetch One Category At A Time, Collect into list----*/
+        List<CategoryResponseDTO> listOfCategory = allCategory.stream().map((category) -> modelMapper.map(category, CategoryResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
         response.setStatus("SUCCESS");

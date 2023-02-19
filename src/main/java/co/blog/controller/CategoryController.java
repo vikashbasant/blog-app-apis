@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/api/categorys")
+@RequestMapping(value = "/api/categories")
 @Slf4j
 public class CategoryController {
 

@@ -48,7 +48,7 @@ public class GetCategory implements CategoryService {
                 "Found With This CategoryId = " + categoryId)));
 
         /*----Convert Category into CategoryResponseDTO:----*/
-        cResponseDTO = this.modelMapper.map(category.get(), CategoryResponseDTO.class);
+        cResponseDTO = this.modelMapper.map(category, CategoryResponseDTO.class);
 
         /*----Simply Return The Response----*/
         response.setStatus("SUCCESS");

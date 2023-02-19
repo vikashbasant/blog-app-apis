@@ -48,7 +48,7 @@ public class GetUser implements UserService {
                         "Found With This UserId = " + userId)));
 
         /*----Convert User into UserResponseDTO:----*/
-        uResponseDTO = this.modelMapper.map(byId.get(), UserResponseDTO.class);
+        uResponseDTO = this.modelMapper.map(byId, UserResponseDTO.class);
 
         /*----Simply Return The Response----*/
         response.setStatus("SUCCESS");

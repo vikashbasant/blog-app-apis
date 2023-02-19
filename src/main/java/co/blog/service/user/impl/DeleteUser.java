@@ -51,7 +51,7 @@ public class DeleteUser implements UserService {
         userRepo.deleteById(userId);
 
         /*----Now Convert the User to UserResponseDTO:----*/
-        uResponseDTO = this.modelMapper.map(byId.get(), UserResponseDTO.class);
+        uResponseDTO = this.modelMapper.map(byId, UserResponseDTO.class);
 
         /*----Now Simply Return Response----*/
         response.setStatus("SUCCESS");

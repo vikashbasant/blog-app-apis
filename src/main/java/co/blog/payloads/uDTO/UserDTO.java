@@ -11,7 +11,7 @@ public class UserDTO {
     @NotNull(message = "Name can't be Null")
     @NotEmpty(message = "Name can't be Empty")
     @Size(min = 2, max = 20, message = "Character Of Name Must be Length of 2 to 20")
-    @Pattern(regexp = "^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$", message = "Please Enter Valid Name!")
+    @Pattern(regexp = "^[a-zA-Z_]+([a-zA-Z0-9._\\s]+)*$", message = "Please Enter Valid Name!")
     private String name;
 
     @NotNull(message = "Email can't be Null")

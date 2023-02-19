@@ -52,7 +52,7 @@ public class DeleteCategory implements CategoryService {
         cRepo.deleteById(categoryId);
 
         /*----Now Convert the Category to CategoryResponseDTO:----*/
-        cResponseDTO = this.modelMapper.map(byCategoryId.get(), CategoryResponseDTO.class);
+        cResponseDTO = this.modelMapper.map(byCategoryId, CategoryResponseDTO.class);
 
         /*----Now Simply Return Response----*/
         response.setStatus("SUCCESS");

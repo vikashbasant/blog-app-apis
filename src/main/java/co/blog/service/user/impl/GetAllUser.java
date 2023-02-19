@@ -3,6 +3,7 @@ package co.blog.service.user.impl;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
+import co.blog.payloads.cDTO.CategoryResponseDTO;
 import co.blog.payloads.uDTO.UserResponseDTO;
 import co.blog.repository.UserRepo;
 import co.blog.util.userUtil.UserService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -50,15 +52,8 @@ public class GetAllUser implements UserService {
             throw new GeneralException("No Record Found!");
         }
 
-        /*----Create ArrayList Of UserResponseDTO----*/
-        List<UserResponseDTO> listOfUser = new ArrayList<>();
-
-        /*----Fetch One User At A Time, Put Into ArrayList----*/
-        allUser.forEach(user -> {
-            /*----Convert User into UserResponseDTO:----*/
-            uResponseDTO = this.modelMapper.map(user,UserResponseDTO.class);
-            listOfUser.add(uResponseDTO);
-        });
+        /*----Fetch One User At A Time, Collect Into ArrayList----*/
+        List<UserResponseDTO> listOfUser = allUser.stream().map((user) -> modelMapper.map(user, UserResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
         response.setStatus("SUCCESS");
