@@ -14,7 +14,14 @@ public enum BlogServiceType {
     UPDATE_CATEGORY,
     GET_CATEGORY,
     GET_ALL_CATEGORY,
-    DELETE_CATEGORY
+    DELETE_CATEGORY,
 
     /*---- For Post ----*/
+    CREATE_POST,
+    GET_POST_BY_CATEGORY_ID,
+    GET_POST_BY_USER_ID,
+    GET_POST,
+    GET_ALL_POST,
+    UPDATE_POST,
+    DELETE_POST
 }

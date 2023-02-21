@@ -3,7 +3,6 @@ package co.blog.controller;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.cDTO.CategoryDTO;
-
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceFactory;
 import co.blog.util.BlogServiceType;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/api/categories")
+@RequestMapping(value = "/categories")
 @Slf4j
 public class CategoryController {
 

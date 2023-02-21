@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/api/users")
+@RequestMapping(value = "/users")
 @Slf4j
 public class UserController {
 
