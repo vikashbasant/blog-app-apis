@@ -3,6 +3,7 @@ package co.blog.service.post.impl;
 import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
+import co.blog.payloads.pDTO.PostResponse;
 import co.blog.payloads.pDTO.PostResponseDTO;
 import co.blog.repository.PostRepo;
 import co.blog.util.BlogService;
@@ -26,7 +27,7 @@ public class GetAllPost implements BlogService {
     private PostRepo pRepo;
 
     @Autowired
-    private Response response;
+    private PostResponse postResponse;
 
 
     @Autowired
@@ -62,11 +63,15 @@ public class GetAllPost implements BlogService {
         List<PostResponseDTO> listOfPost = allPost.stream().map((post) -> modelMapper.map(post, PostResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
-        response.setMessage("Successfully Fetch All The Record");
-        response.setData(listOfPost);
-
-        return response;
+        postResponse.setStatus("SUCCESS");
+        postResponse.setStatusCode("200");
+        postResponse.setMessage("Successfully Fetch All The Record");
+        postResponse.setContent(listOfPost);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalRecords(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+        return postResponse;
     }
 }

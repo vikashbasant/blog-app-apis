@@ -3,6 +3,7 @@ package co.blog.controller;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.pDTO.PostDTO;
+import co.blog.payloads.pDTO.PostResponse;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceFactory;
 import co.blog.util.BlogServiceType;
@@ -59,14 +60,14 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give the Exception
      */
     @GetMapping("/get-all-post")
-    public ResponseEntity<Response> GetAllPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required =
+    public ResponseEntity<PostResponse> GetAllPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required =
             false) Integer pageNumber,
-                                                @RequestParam(value = "pageSize", defaultValue = "5", required =
+                                                    @RequestParam(value = "pageSize", defaultValue = "5", required =
                                                         false) Integer pageSize) throws GeneralException {
         log.info("===: PostController:: Inside GetAllPosts Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_ALL_POST);
         Response response = service.executeService(pageNumber, pageSize);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok((PostResponse) response);
     }
 
 
