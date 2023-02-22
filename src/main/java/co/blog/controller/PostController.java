@@ -59,10 +59,13 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give the Exception
      */
     @GetMapping("/get-all-post")
-    public ResponseEntity<Response> GetAllPosts() throws GeneralException {
+    public ResponseEntity<Response> GetAllPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required =
+            false) Integer pageNumber,
+                                                @RequestParam(value = "pageSize", defaultValue = "5", required =
+                                                        false) Integer pageSize) throws GeneralException {
         log.info("===: PostController:: Inside GetAllPosts Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_ALL_POST);
-        Response response = service.executeService("", "");
+        Response response = service.executeService(pageNumber, pageSize);
         return ResponseEntity.ok(response);
     }
 

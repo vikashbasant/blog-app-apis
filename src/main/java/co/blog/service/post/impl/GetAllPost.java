@@ -10,6 +10,9 @@ import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,8 +41,17 @@ public class GetAllPost implements BlogService {
     public <T, U> Response executeService (T t, U u) throws GeneralException {
         log.info("===: GetAllPost:: Inside executeService Method :===");
 
-        /*----Fetch All The Post----*/
-        List<Post> allPost = pRepo.findAll();
+        Integer pageNumber = (Integer) t;
+        Integer pageSize = (Integer) u;
+
+        /*----Create an Object of Pageable----*/
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        /*----Fetch All The Post With Respect To Pageable Object----*/
+        Page<Post> pagePost = pRepo.findAll(pageable);
+
+        /*----Now Page of Post converted into List of Page----*/
+        List<Post> allPost = pagePost.getContent();
 
         /*----If Record Is Empty Then Simply Throw Exception----*/
         if (allPost.isEmpty()) {
