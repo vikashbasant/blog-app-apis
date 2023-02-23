@@ -23,5 +23,6 @@ public enum BlogServiceType {
     GET_POST,
     GET_ALL_POST,
     UPDATE_POST,
-    DELETE_POST
+    DELETE_POST,
+    SEARCH_POST
 }

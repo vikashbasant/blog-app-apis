@@ -35,7 +35,7 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @PostMapping("/create")
-    public ResponseEntity<Response> CreatePost(@RequestBody @Valid PostDTO postDTO) throws GeneralException {
+    public ResponseEntity<Response> createPost(@RequestBody @Valid PostDTO postDTO) throws GeneralException {
         log.info("===: PostController:: Inside CreatePost Method :===");
         BlogService service = factory.getService(BlogServiceType.CREATE_POST);
         Response response = service.executeService(postDTO, "");
@@ -50,7 +50,7 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give the Exception
      */
     @GetMapping("/get-post/{postId}")
-    public ResponseEntity<Response> GetPost(@PathVariable @Valid Integer postId) throws GeneralException {
+    public ResponseEntity<Response> getPost(@PathVariable @Valid Integer postId) throws GeneralException {
         log.info("===: PostController:: Inside GetPost Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_POST);
         Response response = service.executeService(postId, "");
@@ -64,7 +64,7 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give the Exception
      */
     @GetMapping("/get-all-post")
-    public ResponseEntity<Response> GetAllPosts(
+    public ResponseEntity<Response> getAllPosts(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
             @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
@@ -91,7 +91,7 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give this Exception
      */
     @GetMapping("/get-posts-by-category/{categoryId}")
-    public ResponseEntity<Response> GetPostsByCategory(
+    public ResponseEntity<Response> getPostsByCategory(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
             @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
@@ -119,7 +119,7 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give this Exception
      */
     @GetMapping("/get-posts-by-user/{userId}")
-    public ResponseEntity<Response> GetPostsByUser(
+    public ResponseEntity<Response> getPostsByUser(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
             @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
@@ -149,7 +149,8 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give this Exception
      */
     @PutMapping("/update-post/{postId}")
-    public ResponseEntity<Response> UpdatePost (@RequestBody @Valid PostDTO postDTO, @PathVariable @Valid Integer postId) throws GeneralException {
+    public ResponseEntity<Response> updatePost (@RequestBody @Valid PostDTO postDTO,
+                                                @PathVariable @Valid Integer postId) throws GeneralException {
         log.info("===: PostController:: Inside UpdatePost Method :===");
         BlogService service = factory.getService(BlogServiceType.UPDATE_POST);
         Response response = service.executeService(postDTO, postId);
@@ -163,10 +164,19 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give this Exception
      */
     @DeleteMapping("/delete-post/{postId}")
-    public ResponseEntity<Response> DeletePost (@PathVariable @Valid Integer postId) throws GeneralException {
+    public ResponseEntity<Response> deletePost (@PathVariable @Valid Integer postId) throws GeneralException {
         log.info("===: PostController:: Inside DeletePost Method :===");
         BlogService service = factory.getService(BlogServiceType.DELETE_POST);
         Response response = service.executeService(postId, "");
+        return ResponseEntity.ok(response);
+    }
+
+
+    @GetMapping("/search-by-title/{keyword}")
+    public ResponseEntity<Response> searchPost(@PathVariable @Valid String keyword) throws GeneralException{
+        log.info("===: PostController:: Inside SearchPost Method :===");
+        BlogService service = factory.getService(BlogServiceType.SEARCH_POST);
+        Response response = service.executeService(keyword, "");
         return ResponseEntity.ok(response);
     }
 }
