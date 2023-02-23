@@ -3,7 +3,9 @@ package co.blog.service.post.impl;
 import co.blog.entity.Post;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
+import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
+import co.blog.payloads.pDTO.PostResponse;
 import co.blog.payloads.pDTO.PostResponseDTO;
 import co.blog.repository.PostRepo;
 import co.blog.repository.UserRepo;
@@ -12,6 +14,9 @@ import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,10 +33,10 @@ public class GetPostByUserId implements BlogService {
     private UserRepo uRepo;
 
     @Autowired
-    private Response response;
+    private PostResponse postResponse;
 
     @Autowired
-    private PostResponseDTO pResponseDTO;
+    private PaginationDTO paginationDTO;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -48,22 +53,39 @@ public class GetPostByUserId implements BlogService {
 
         Integer userId = (Integer) t;
 
+        paginationDTO = (PaginationDTO) u;
+
         /*----Find User with UserId----*/
         User user = uRepo.findById(userId).orElseThrow(() -> new GeneralException(
                 "User Not Found With UserId = " + userId));
 
-        /*----Now Find the post with user----*/
-        List<Post> posts = pRepo.findByUser(user);
+
+        Integer pageNumber = paginationDTO.getPageNumber();
+        Integer pageSize = paginationDTO.getPageSize();
+
+        /*----Create an Object of Pageable----*/
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        /*----Fetch All The Post With Respect To user & Pageable Object---*/
+        Page<Post> pagePost = pRepo.findByUser(user, pageable);
+
+        /*----Now Fetch List of Post from pagePost----*/
+        List<Post> posts = pagePost.getContent();
 
         /*----Now Iterate with listOfPost and convert PostResponseDTO----*/
         List<PostResponseDTO> listOfPost = posts.stream().map(post -> modelMapper.map(post, PostResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
-        response.setMessage("Successfully Fetch All The Posts With UserId = " + userId);
-        response.setData(listOfPost);
+        postResponse.setStatus("SUCCESS");
+        postResponse.setStatusCode("200");
+        postResponse.setMessage("Successfully Fetch All The Posts With UserId = " + userId);
+        postResponse.setContent(listOfPost);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalRecords(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+        return postResponse;
 
-        return response;
     }
 }

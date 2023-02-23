@@ -2,6 +2,7 @@ package co.blog.service.post.impl;
 
 import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
+import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
 import co.blog.payloads.pDTO.PostResponse;
 import co.blog.payloads.pDTO.PostResponseDTO;
@@ -29,6 +30,8 @@ public class GetAllPost implements BlogService {
     @Autowired
     private PostResponse postResponse;
 
+    @Autowired
+    private PaginationDTO paginationDTO;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -42,8 +45,9 @@ public class GetAllPost implements BlogService {
     public <T, U> Response executeService (T t, U u) throws GeneralException {
         log.info("===: GetAllPost:: Inside executeService Method :===");
 
-        Integer pageNumber = (Integer) t;
-        Integer pageSize = (Integer) u;
+        paginationDTO = (PaginationDTO) t;
+        Integer pageNumber = paginationDTO.getPageNumber();
+        Integer pageSize = paginationDTO.getPageSize();
 
         /*----Create an Object of Pageable----*/
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
@@ -51,7 +55,7 @@ public class GetAllPost implements BlogService {
         /*----Fetch All The Post With Respect To Pageable Object----*/
         Page<Post> pagePost = pRepo.findAll(pageable);
 
-        /*----Now Page of Post converted into List of Page----*/
+        /*----Now Fetch List of Post from pagePost----*/
         List<Post> allPost = pagePost.getContent();
 
         /*----If Record Is Empty Then Simply Throw Exception----*/

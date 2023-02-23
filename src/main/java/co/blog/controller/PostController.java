@@ -1,6 +1,7 @@
 package co.blog.controller;
 
 import co.blog.exception.GeneralException;
+import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
 import co.blog.payloads.pDTO.PostDTO;
 import co.blog.payloads.pDTO.PostResponse;
@@ -22,6 +23,9 @@ public class PostController {
 
     @Autowired
     private BlogServiceFactory factory;
+
+    @Autowired
+    private PaginationDTO paginationDTO;
 
 
     /**
@@ -60,14 +64,19 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give the Exception
      */
     @GetMapping("/get-all-post")
-    public ResponseEntity<PostResponse> GetAllPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required =
-            false) Integer pageNumber,
-                                                    @RequestParam(value = "pageSize", defaultValue = "5", required =
-                                                        false) Integer pageSize) throws GeneralException {
+    public ResponseEntity<Response> GetAllPosts(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize) throws GeneralException {
+
         log.info("===: PostController:: Inside GetAllPosts Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_ALL_POST);
-        Response response = service.executeService(pageNumber, pageSize);
-        return ResponseEntity.ok((PostResponse) response);
+
+        /*----Set the pageNumber and pageSize into paginationDTO----*/
+        paginationDTO.setPageNumber(pageNumber);
+        paginationDTO.setPageSize(pageSize);
+
+        Response response = service.executeService(paginationDTO, "");
+        return ResponseEntity.ok( response);
     }
 
 
@@ -78,10 +87,19 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give this Exception
      */
     @GetMapping("/get-posts-by-category/{categoryId}")
-    public ResponseEntity<Response> GetPostsByCategory(@PathVariable @Valid Integer categoryId) throws GeneralException {
+    public ResponseEntity<Response> GetPostsByCategory(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
+            @PathVariable @Valid Integer categoryId) throws GeneralException {
+
         log.info("===: PostController:: Inside GetPostsByCategory Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_POST_BY_CATEGORY_ID);
-        Response response = service.executeService(categoryId, "");
+
+        /*----Set the pageNumber and pageSize into paginationDTO----*/
+        paginationDTO.setPageNumber(pageNumber);
+        paginationDTO.setPageSize(pageSize);
+
+        Response response = service.executeService(categoryId, paginationDTO);
         return ResponseEntity.ok(response);
     }
 
@@ -93,10 +111,20 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give this Exception
      */
     @GetMapping("/get-posts-by-user/{userId}")
-    public ResponseEntity<Response> GetPostsByUser(@PathVariable @Valid Integer userId) throws GeneralException {
+    public ResponseEntity<Response> GetPostsByUser(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
+            @PathVariable @Valid Integer userId) throws GeneralException {
+
         log.info("===: PostController:: Inside GetPostsByUser Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_POST_BY_USER_ID);
-        Response response = service.executeService(userId, "");
+
+        /*----Set the pageNumber and pageSize into paginationDTO----*/
+        paginationDTO.setPageNumber(pageNumber);
+        paginationDTO.setPageSize(pageSize);
+
+
+        Response response = service.executeService(userId, paginationDTO);
         return ResponseEntity.ok(response);
     }
 

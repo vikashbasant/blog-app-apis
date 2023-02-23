@@ -3,8 +3,10 @@ package co.blog.service.post.impl;
 import co.blog.entity.Category;
 import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
+import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
 import co.blog.payloads.cDTO.CategoryResponseDTO;
+import co.blog.payloads.pDTO.PostResponse;
 import co.blog.payloads.pDTO.PostResponseDTO;
 import co.blog.repository.CategoryRepo;
 import co.blog.repository.PostRepo;
@@ -13,6 +15,9 @@ import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,10 +34,10 @@ public class GetPostByCategoryId implements BlogService {
     private CategoryRepo cRepo;
 
     @Autowired
-    private PostResponseDTO pResponseDTO;
+    private PostResponse postResponse;
 
     @Autowired
-    private Response response;
+    private PaginationDTO paginationDTO;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -47,25 +52,42 @@ public class GetPostByCategoryId implements BlogService {
 
         log.info("===: GetPostByCategoryId:: Inside executeService Method :===");
 
+
         Integer categoryId = (Integer) t;
+        paginationDTO = (PaginationDTO) u;
 
         /*----Find Category with CategoryId----*/
         Category category = cRepo.findById(categoryId).orElseThrow(() -> new GeneralException(
                 "Category Not Found With CategoryId = " + categoryId));
 
-        /*----Now Find the post with category----*/
-        List<Post> posts = pRepo.findByCategory(category);
+
+        Integer pageNumber = paginationDTO.getPageNumber();
+        Integer pageSize = paginationDTO.getPageSize();
+
+        /*----Create an Object of Pageable----*/
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        /*----Fetch All The Post With Respect To category & Pageable Object----*/
+        Page<Post> pagePost = pRepo.findByCategory(category, pageable);
+
+        /*----Now Fetch List of Post from pagePost----*/
+        List<Post> posts = pagePost.getContent();
 
         /*----Now Iterate with listOfPost and convert PostResponseDTO----*/
         List<PostResponseDTO> listOfPost =
                 posts.stream().map(post -> modelMapper.map(post, PostResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
-        response.setMessage("Successfully Fetch All The Posts With CategoryId = " + categoryId);
-        response.setData(listOfPost);
+        postResponse.setStatus("SUCCESS");
+        postResponse.setStatusCode("200");
+        postResponse.setMessage("Successfully Fetch All The Posts With CategoryId = " + categoryId);
+        postResponse.setContent(listOfPost);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalRecords(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+        return postResponse;
 
-        return response;
     }
 }
