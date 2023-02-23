@@ -17,7 +17,7 @@ import java.util.Date;
 @Getter
 public class PostDTO {
 
-    private Integer PostId;
+    private Integer postId;
 
     @NotNull(message = "postTitle can't be Null")
     @NotEmpty(message = "postTitle can't be Empty")

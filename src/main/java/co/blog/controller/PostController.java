@@ -66,7 +66,9 @@ public class PostController {
     @GetMapping("/get-all-post")
     public ResponseEntity<Response> GetAllPosts(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize) throws GeneralException {
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) throws GeneralException {
 
         log.info("===: PostController:: Inside GetAllPosts Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_ALL_POST);
@@ -74,6 +76,8 @@ public class PostController {
         /*----Set the pageNumber and pageSize into paginationDTO----*/
         paginationDTO.setPageNumber(pageNumber);
         paginationDTO.setPageSize(pageSize);
+        paginationDTO.setSortBy(sortBy);
+        paginationDTO.setSortDir(sortDir);
 
         Response response = service.executeService(paginationDTO, "");
         return ResponseEntity.ok( response);
@@ -90,6 +94,8 @@ public class PostController {
     public ResponseEntity<Response> GetPostsByCategory(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir,
             @PathVariable @Valid Integer categoryId) throws GeneralException {
 
         log.info("===: PostController:: Inside GetPostsByCategory Method :===");
@@ -98,6 +104,8 @@ public class PostController {
         /*----Set the pageNumber and pageSize into paginationDTO----*/
         paginationDTO.setPageNumber(pageNumber);
         paginationDTO.setPageSize(pageSize);
+        paginationDTO.setSortBy(sortBy);
+        paginationDTO.setSortDir(sortDir);
 
         Response response = service.executeService(categoryId, paginationDTO);
         return ResponseEntity.ok(response);
@@ -114,6 +122,8 @@ public class PostController {
     public ResponseEntity<Response> GetPostsByUser(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir,
             @PathVariable @Valid Integer userId) throws GeneralException {
 
         log.info("===: PostController:: Inside GetPostsByUser Method :===");
@@ -122,6 +132,8 @@ public class PostController {
         /*----Set the pageNumber and pageSize into paginationDTO----*/
         paginationDTO.setPageNumber(pageNumber);
         paginationDTO.setPageSize(pageSize);
+        paginationDTO.setSortBy(sortBy);
+        paginationDTO.setSortDir(sortDir);
 
 
         Response response = service.executeService(userId, paginationDTO);

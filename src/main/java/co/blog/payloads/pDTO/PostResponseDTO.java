@@ -18,7 +18,7 @@ import java.util.Date;
 @Component
 public class PostResponseDTO {
 
-    private Integer id;
+    private Integer postId;
 
     private String postTitle;
 

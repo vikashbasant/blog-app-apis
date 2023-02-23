@@ -66,7 +66,7 @@ public class CreatePost implements BlogService {
 
         /*----Convert pDTO into Post:----*/
         Post post = new Post();
-        post.setId(pDTO.getPostId());
+        post.setPostId(pDTO.getPostId());
         post.setPostTitle(pDTO.getPostTitle());
         post.setPostContent(pDTO.getPostContent());
         post.setImageName(pDTO.getImageName());

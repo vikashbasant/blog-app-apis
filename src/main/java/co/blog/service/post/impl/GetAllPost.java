@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,9 +49,14 @@ public class GetAllPost implements BlogService {
         paginationDTO = (PaginationDTO) t;
         Integer pageNumber = paginationDTO.getPageNumber();
         Integer pageSize = paginationDTO.getPageSize();
+        String sortBy = paginationDTO.getSortBy();
+        String sortDir = paginationDTO.getSortDir();
+
+        // For Sorting:
+        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
         /*----Create an Object of Pageable----*/
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
         /*----Fetch All The Post With Respect To Pageable Object----*/
         Page<Post> pagePost = pRepo.findAll(pageable);
