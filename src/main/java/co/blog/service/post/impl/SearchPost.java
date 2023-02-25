@@ -1,8 +1,11 @@
 package co.blog.service.post.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
+import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
+import co.blog.payloads.pDTO.PostResponse;
 import co.blog.payloads.pDTO.PostResponseDTO;
 import co.blog.repository.PostRepo;
 import co.blog.util.BlogService;
@@ -10,6 +13,10 @@ import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +30,10 @@ public class SearchPost implements BlogService {
     private PostRepo pRepo;
 
     @Autowired
-    private Response response;
+    private PostResponse postResponse;
+
+    @Autowired
+    private PaginationDTO paginationDTO;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -35,17 +45,44 @@ public class SearchPost implements BlogService {
 
     @Override
     public <T, U> Response executeService (T t, U u) throws GeneralException {
-        String keyword = (String) t;
-        List<Post> posts = pRepo.searchByTitle(keyword);
 
-        List<PostResponseDTO> listOfPosts = posts.stream().map((post) -> modelMapper.map(post, PostResponseDTO.class)).collect(Collectors.toList());
+        log.info("===: SearchPost:: Inside executeService Method :===");
+
+        String keyword = (String) t;
+        paginationDTO = (PaginationDTO) u;
+
+        // Fetching all the details of paginationDtO object:
+        int pageNumber = paginationDTO.getPageNumber();
+        int pageSize = paginationDTO.getPageSize();
+        String sortBy = paginationDTO.getSortBy();
+        String sortDir = paginationDTO.getSortDir();
+
+        // For Sorting:
+        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+        /*----Create an Object of Pageable----*/
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+        // Fetch the with respect to keyword and pageable:
+        Page<Post> pagePost = pRepo.searchByTitle(keyword, pageable);
+
+        // Fetch the content of pagePost:
+        List<Post> posts = pagePost.getContent();
+
+        /*----Now Iterate with listOfPost and convert PostResponseDTO----*/
+        List<PostResponseDTO> listOfPosts = posts.stream().map(post -> modelMapper.map(post, PostResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
-        response.setMessage("Successfully Fetch The List Of Post With Search Keyword = " + keyword);
-        response.setData(listOfPosts);
+        postResponse.setStatus(BlogAppConstants.STATUS);
+        postResponse.setStatusCode(BlogAppConstants.STATUS_CODE);
+        postResponse.setMessage("Successfully Fetch The List Of Post With Search Keyword = " + keyword);
+        postResponse.setContent(listOfPosts);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalRecords(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
 
-        return response;
+        return postResponse;
     }
 }

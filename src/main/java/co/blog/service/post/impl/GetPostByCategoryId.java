@@ -1,11 +1,11 @@
 package co.blog.service.post.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.Category;
 import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
-import co.blog.payloads.cDTO.CategoryResponseDTO;
 import co.blog.payloads.pDTO.PostResponse;
 import co.blog.payloads.pDTO.PostResponseDTO;
 import co.blog.repository.CategoryRepo;
@@ -62,8 +62,8 @@ public class GetPostByCategoryId implements BlogService {
                 "Category Not Found With CategoryId = " + categoryId));
 
 
-        Integer pageNumber = paginationDTO.getPageNumber();
-        Integer pageSize = paginationDTO.getPageSize();
+        int pageNumber = paginationDTO.getPageNumber();
+        int pageSize = paginationDTO.getPageSize();
         String sortBy = paginationDTO.getSortBy();
         String sortDir = paginationDTO.getSortDir();
 
@@ -84,8 +84,8 @@ public class GetPostByCategoryId implements BlogService {
                 posts.stream().map(post -> modelMapper.map(post, PostResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
-        postResponse.setStatus("SUCCESS");
-        postResponse.setStatusCode("200");
+        postResponse.setStatus(BlogAppConstants.STATUS);
+        postResponse.setStatusCode(BlogAppConstants.STATUS_CODE);
         postResponse.setMessage("Successfully Fetch All The Posts With CategoryId = " + categoryId);
         postResponse.setContent(listOfPost);
         postResponse.setPageNumber(pagePost.getNumber());

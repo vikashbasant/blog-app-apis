@@ -1,5 +1,6 @@
 package co.blog.service.user.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
@@ -54,8 +55,8 @@ public class DeleteUser implements BlogService {
         uResponseDTO = this.modelMapper.map(byId, UserResponseDTO.class);
 
         /*----Now Simply Return Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
+        response.setStatus(BlogAppConstants.STATUS);
+        response.setStatusCode(BlogAppConstants.STATUS_CODE);
         response.setMessage("Successfully Delete The User With UserId = " + userId);
         response.setData(uResponseDTO);
 

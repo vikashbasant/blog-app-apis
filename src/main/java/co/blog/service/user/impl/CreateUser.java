@@ -1,5 +1,6 @@
 package co.blog.service.user.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
@@ -36,6 +37,7 @@ public class CreateUser implements BlogService {
 
     @Override
     public <T, U> Response executeService (T t, U u) throws GeneralException {
+
         log.info("===: CreateUser:: Inside ExecuteService Method :===");
 
         UserDTO uDTO = (UserDTO) t;
@@ -50,8 +52,8 @@ public class CreateUser implements BlogService {
         uResponseDTO = this.userToUserResponseDTO(sUser);
 
         /*----Simply Return The Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
+        response.setStatus(BlogAppConstants.STATUS);
+        response.setStatusCode(BlogAppConstants.STATUS_CODE);
         response.setMessage("User Created Successfully");
         response.setData(uResponseDTO);
 
@@ -62,29 +64,12 @@ public class CreateUser implements BlogService {
 
 
     public User userDtoToUser(UserDTO uDTO) {
+        return this.modelMapper.map(uDTO, User.class);
 
-        /*
-        User user = new User();
-        user.setId(uDTO.getId());
-        user.setName(uDTO.getName());
-        user.setEmail(uDTO.getEmail());
-        user.setPassword(uDTO.getPassword());
-        user.setAbout(uDTO.getAbout());
-         */
-        User user = this.modelMapper.map(uDTO, User.class);
-        return user;
     }
 
     public UserResponseDTO userToUserResponseDTO(User user) {
-        /*
-        userResponseDTO.setId(saveUser.getId());
-        userResponseDTO.setName(saveUser.getName());
-        userResponseDTO.setEmail(saveUser.getEmail());
-        userResponseDTO.setPassword(saveUser.getPassword());
-        userResponseDTO.setAbout(saveUser.getAbout());
-         */
-        UserResponseDTO uResponseDTO = this.modelMapper.map(user, UserResponseDTO.class);
-        return uResponseDTO;
+        return this.modelMapper.map(user, UserResponseDTO.class);
     }
 
 

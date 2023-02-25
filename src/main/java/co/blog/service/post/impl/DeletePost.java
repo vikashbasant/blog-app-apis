@@ -1,5 +1,6 @@
 package co.blog.service.post.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
@@ -50,8 +51,8 @@ public class DeletePost implements BlogService {
         pResponseDTO = modelMapper.map(post, PostResponseDTO.class);
 
         /*----Now Simply Return Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
+        response.setStatus(BlogAppConstants.STATUS);
+        response.setStatusCode(BlogAppConstants.STATUS_CODE);
         response.setMessage("Successfully Delete The Post With postId = " + postId);
         response.setData(pResponseDTO);
 

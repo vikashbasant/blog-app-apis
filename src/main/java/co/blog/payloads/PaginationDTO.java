@@ -15,6 +15,5 @@ public class PaginationDTO {
     private int pageNumber;
     private int pageSize;
     private String sortBy;
-
     private String sortDir;
 }

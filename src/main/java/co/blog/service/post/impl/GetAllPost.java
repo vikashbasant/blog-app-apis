@@ -1,5 +1,6 @@
 package co.blog.service.post.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.PaginationDTO;
@@ -47,8 +48,8 @@ public class GetAllPost implements BlogService {
         log.info("===: GetAllPost:: Inside executeService Method :===");
 
         paginationDTO = (PaginationDTO) t;
-        Integer pageNumber = paginationDTO.getPageNumber();
-        Integer pageSize = paginationDTO.getPageSize();
+        int pageNumber = paginationDTO.getPageNumber();
+        int pageSize = paginationDTO.getPageSize();
         String sortBy = paginationDTO.getSortBy();
         String sortDir = paginationDTO.getSortDir();
 
@@ -73,8 +74,8 @@ public class GetAllPost implements BlogService {
         List<PostResponseDTO> listOfPost = allPost.stream().map((post) -> modelMapper.map(post, PostResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
-        postResponse.setStatus("SUCCESS");
-        postResponse.setStatusCode("200");
+        postResponse.setStatus(BlogAppConstants.STATUS);
+        postResponse.setStatusCode(BlogAppConstants.STATUS_CODE);
         postResponse.setMessage("Successfully Fetch All The Record");
         postResponse.setContent(listOfPost);
         postResponse.setPageNumber(pagePost.getNumber());

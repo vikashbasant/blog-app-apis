@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class GeneralException extends Exception {
+
     public GeneralException (String message) {
         super(message);
     }

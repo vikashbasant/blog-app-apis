@@ -1,10 +1,10 @@
 package co.blog.controller;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
 import co.blog.payloads.pDTO.PostDTO;
-import co.blog.payloads.pDTO.PostResponse;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceFactory;
 import co.blog.util.BlogServiceType;
@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping(value = "/posts")
@@ -65,10 +66,10 @@ public class PostController {
      */
     @GetMapping("/get-all-post")
     public ResponseEntity<Response> getAllPosts(
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) throws GeneralException {
+            @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = BlogAppConstants.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = BlogAppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = BlogAppConstants.SORT_DIR, required = false) String sortDir) throws GeneralException {
 
         log.info("===: PostController:: Inside GetAllPosts Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_ALL_POST);
@@ -92,10 +93,10 @@ public class PostController {
      */
     @GetMapping("/get-posts-by-category/{categoryId}")
     public ResponseEntity<Response> getPostsByCategory(
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir,
+            @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = BlogAppConstants.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = BlogAppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = BlogAppConstants.SORT_DIR, required = false) String sortDir,
             @PathVariable @Valid Integer categoryId) throws GeneralException {
 
         log.info("===: PostController:: Inside GetPostsByCategory Method :===");
@@ -120,10 +121,10 @@ public class PostController {
      */
     @GetMapping("/get-posts-by-user/{userId}")
     public ResponseEntity<Response> getPostsByUser(
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir,
+            @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = BlogAppConstants.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = BlogAppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = BlogAppConstants.SORT_DIR, required = false) String sortDir,
             @PathVariable @Valid Integer userId) throws GeneralException {
 
         log.info("===: PostController:: Inside GetPostsByUser Method :===");
@@ -149,8 +150,9 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give this Exception
      */
     @PutMapping("/update-post/{postId}")
-    public ResponseEntity<Response> updatePost (@RequestBody @Valid PostDTO postDTO,
-                                                @PathVariable @Valid Integer postId) throws GeneralException {
+    public ResponseEntity<Response> updatePost (
+            @RequestBody @Valid PostDTO postDTO,
+            @PathVariable @Valid Integer postId) throws GeneralException {
         log.info("===: PostController:: Inside UpdatePost Method :===");
         BlogService service = factory.getService(BlogServiceType.UPDATE_POST);
         Response response = service.executeService(postDTO, postId);
@@ -173,10 +175,24 @@ public class PostController {
 
 
     @GetMapping("/search-by-title/{keyword}")
-    public ResponseEntity<Response> searchPost(@PathVariable @Valid String keyword) throws GeneralException{
+    public ResponseEntity<Response> searchPost(
+            @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = BlogAppConstants.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = BlogAppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = BlogAppConstants.SORT_DIR, required = false) String sortDir,
+            @PathVariable @Valid String keyword) throws GeneralException{
+
         log.info("===: PostController:: Inside SearchPost Method :===");
         BlogService service = factory.getService(BlogServiceType.SEARCH_POST);
-        Response response = service.executeService(keyword, "");
+
+        /*----Set the pageNumber and pageSize into paginationDTO----*/
+        paginationDTO.setPageNumber(pageNumber);
+        paginationDTO.setPageSize(pageSize);
+        paginationDTO.setSortBy(sortBy);
+        paginationDTO.setSortDir(sortDir);
+
+
+        Response response = service.executeService(keyword, paginationDTO);
         return ResponseEntity.ok(response);
     }
 }

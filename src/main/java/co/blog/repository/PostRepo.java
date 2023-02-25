@@ -15,10 +15,7 @@ import java.util.List;
 @EnableJpaRepositories
 public interface PostRepo extends JpaRepository<Post, Integer> {
     Page<Post> findByCategory (Category category, Pageable pageable);
-
     Page<Post> findByUser (User user, Pageable pageable);
-
-
     @Query("select p from Post p where lower(p.postTitle) like lower(concat('%',:keyword,'%'))")
-    List<Post> searchByTitle(@Param("keyword") String  title);
+    Page<Post> searchByTitle(@Param("keyword") String  title, Pageable pageable);
 }

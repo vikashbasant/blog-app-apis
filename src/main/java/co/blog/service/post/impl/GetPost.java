@@ -1,5 +1,6 @@
 package co.blog.service.post.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
@@ -15,21 +16,14 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class GetPost implements BlogService {
-
     @Autowired
     private PostRepo pRepo;
-
     @Autowired
     private Response response;
-
     @Autowired
     private PostResponseDTO pResponseDTO;
-
     @Autowired
     private ModelMapper modelMapper;
-
-
-
     @Override
     public BlogServiceType getServiceType () {
         return BlogServiceType.GET_POST;
@@ -37,6 +31,7 @@ public class GetPost implements BlogService {
 
     @Override
     public <T, U> Response executeService (T t, U u) throws GeneralException {
+
         log.info("===: GetPost:: Inside executeService Method :===");
 
         Integer postId = (Integer) t;
@@ -48,8 +43,8 @@ public class GetPost implements BlogService {
         pResponseDTO = modelMapper.map(post, PostResponseDTO.class);
 
         /*----Simply Return The Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
+        response.setStatus(BlogAppConstants.STATUS);
+        response.setStatusCode(BlogAppConstants.STATUS_CODE);
         response.setMessage("Successfully Fetch The Post With postId = " + postId);
         response.setData(pResponseDTO);
 

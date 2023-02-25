@@ -1,5 +1,6 @@
 package co.blog.service.user.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
@@ -47,22 +48,30 @@ public class UpdateUser implements BlogService {
         Integer userId = (Integer) u;
 
         /*----First Find The User With userId----*/
-        Optional.ofNullable(userRepo.findById(userId).orElseThrow(() -> new GeneralException(
+        Optional<User> user = Optional.ofNullable(userRepo.findById(userId).orElseThrow(() -> new GeneralException(
                 "User Not Found With UserId = " + userId)));
 
         /*----Then Simply Update The User----*/
-        userRepo.updateId(userId, uDTO.getName(), uDTO.getEmail(), uDTO.getPassword(),
-                uDTO.getAbout());
 
-        Optional<User> updatedUser = userRepo.findById(userId);
+        if (user.isPresent()) {
+            user.get().setUserName(uDTO.getUserName());
+            user.get().setUserPassword(uDTO.getUserPassword());
+            user.get().setUserEmail(uDTO.getUserEmail());
+            user.get().setUserAbout(uDTO.getUserAbout());
+        }
+
+
+        /*----Then Simply Save Updated User Into DB----*/
+        User sUser = userRepo.save(user.get());
+
 
         /*----Convert The uDTO to UserResponseDTO----*/
-        uResponseDTO = this.modelMapper.map(updatedUser, UserResponseDTO.class);
+        uResponseDTO = this.modelMapper.map(sUser, UserResponseDTO.class);
 
 
         /*----Simply Return The Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
+        response.setStatus(BlogAppConstants.STATUS);
+        response.setStatusCode(BlogAppConstants.STATUS_CODE);
         response.setMessage("Successfully Update The User With UserId = " + userId);
         response.setData(uResponseDTO);
 

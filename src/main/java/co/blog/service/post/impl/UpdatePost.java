@@ -1,5 +1,6 @@
 package co.blog.service.post.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.Category;
 import co.blog.entity.Post;
 import co.blog.entity.User;
@@ -66,7 +67,7 @@ public class UpdatePost implements BlogService {
         /*----Update the Post:----*/
         post.setPostTitle(pDTO.getPostTitle());
         post.setPostContent(pDTO.getPostContent());
-        post.setImageName(pDTO.getImageName());
+        post.setPostImageName(pDTO.getPostImageName());
         post.setUser(user);
         post.setCategory(category);
 
@@ -77,8 +78,8 @@ public class UpdatePost implements BlogService {
         pResponseDTO = this.modelMapper.map(sPost, PostResponseDTO.class);
 
         /*----Simply Return The Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
+        response.setStatus(BlogAppConstants.STATUS);
+        response.setStatusCode(BlogAppConstants.STATUS_CODE);
         response.setMessage("Successfully Update The Post With postId = " + postId);
         response.setData(pResponseDTO);
 

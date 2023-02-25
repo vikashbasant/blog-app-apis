@@ -1,5 +1,6 @@
 package co.blog.service.post.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.Post;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
@@ -61,8 +62,8 @@ public class GetPostByUserId implements BlogService {
                 "User Not Found With UserId = " + userId));
 
 
-        Integer pageNumber = paginationDTO.getPageNumber();
-        Integer pageSize = paginationDTO.getPageSize();
+        int pageNumber = paginationDTO.getPageNumber();
+        int pageSize = paginationDTO.getPageSize();
         String sortBy = paginationDTO.getSortBy();
         String sortDir = paginationDTO.getSortDir();
 
@@ -83,8 +84,8 @@ public class GetPostByUserId implements BlogService {
         List<PostResponseDTO> listOfPost = posts.stream().map(post -> modelMapper.map(post, PostResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
-        postResponse.setStatus("SUCCESS");
-        postResponse.setStatusCode("200");
+        postResponse.setStatus(BlogAppConstants.STATUS);
+        postResponse.setStatusCode(BlogAppConstants.STATUS_CODE);
         postResponse.setMessage("Successfully Fetch All The Posts With UserId = " + userId);
         postResponse.setContent(listOfPost);
         postResponse.setPageNumber(pagePost.getNumber());

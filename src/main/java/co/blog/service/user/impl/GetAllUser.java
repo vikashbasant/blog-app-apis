@@ -1,5 +1,6 @@
 package co.blog.service.user.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
@@ -48,11 +49,11 @@ public class GetAllUser implements BlogService {
         }
 
         /*----Fetch One User At A Time, Collect Into ArrayList----*/
-        List<UserResponseDTO> listOfUser = allUser.stream().map((user) -> modelMapper.map(user, UserResponseDTO.class)).collect(Collectors.toList());
+        List<UserResponseDTO> listOfUser = allUser.stream().map(user -> modelMapper.map(user, UserResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
+        response.setStatus(BlogAppConstants.STATUS);
+        response.setStatusCode(BlogAppConstants.STATUS_CODE);
         response.setMessage("Successfully Fetch All The Record");
         response.setData(listOfUser);
 

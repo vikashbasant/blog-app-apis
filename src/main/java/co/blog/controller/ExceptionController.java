@@ -59,7 +59,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
 
     /*----Handle The Custom RuntimeException Exception.----*/
     @ExceptionHandler(value = RuntimeException.class)
-    public ResponseEntity runtimeException (RuntimeException ex) {
+    public ResponseEntity<Object> runtimeException (RuntimeException ex) {
 
         log.info("===: ExceptionController:: Inside runtimeException Method :===");
         String message = ex.getMessage();
@@ -68,7 +68,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
 
     /*----Handle The Custom GeneralException Exception.----*/
     @ExceptionHandler(value = GeneralException.class)
-    public ResponseEntity generalException (GeneralException gExcp) {
+    public ResponseEntity<Object> generalException (GeneralException gExcp) {
         log.info("===: ExceptionController:: Inside generalException Method :===");
         String message = gExcp.getMessage();
         return new ResponseEntity(getResponse(message, "BLOGS_400"), HttpStatus.BAD_REQUEST);

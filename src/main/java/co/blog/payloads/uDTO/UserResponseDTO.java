@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class UserResponseDTO {
-    private int id;
-    private String name;
-    private String email;
-    private String password;
-    private String about;
+    private int userId;
+    private String userName;
+    private String userEmail;
+    private String userPassword;
+    private String userAbout;
 }

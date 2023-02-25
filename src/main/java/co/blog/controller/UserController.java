@@ -23,7 +23,6 @@ public class UserController {
     private BlogServiceFactory factory;
 
 
-
     /**
      * For Create User API Here @Valid Annotation used for Enable the Validation:
      * @param request UserDTO

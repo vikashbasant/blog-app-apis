@@ -1,6 +1,7 @@
 package co.blog.service.category.impl;
 
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.Category;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
@@ -51,8 +52,8 @@ public class GetCategory implements BlogService {
         cResponseDTO = this.modelMapper.map(category, CategoryResponseDTO.class);
 
         /*----Simply Return The Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
+        response.setStatus(BlogAppConstants.STATUS);
+        response.setStatusCode(BlogAppConstants.STATUS_CODE);
         response.setMessage("Successfully Fetch The Category With CategoryId = " + categoryId);
         response.setData(cResponseDTO);
 

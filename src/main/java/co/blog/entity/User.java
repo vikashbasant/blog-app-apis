@@ -21,19 +21,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userId")
-    private int id;
+    private int userId;
 
     @Column(name = "userName", nullable = false, length = 100)
-    private String name;
+    private String userName;
 
     @Column(name = "userEmail")
-    private String email;
+    private String userEmail;
 
     @Column(name = "userPassword")
-    private String password;
+    private String userPassword;
 
     @Column(name = "userAbout")
-    private String about;
+    private String userAbout;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private Set<Post> posts = new TreeSet<>();

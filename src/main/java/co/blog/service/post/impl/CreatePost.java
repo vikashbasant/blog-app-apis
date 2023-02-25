@@ -1,5 +1,6 @@
 package co.blog.service.post.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.Category;
 import co.blog.entity.Post;
 import co.blog.entity.User;
@@ -69,8 +70,8 @@ public class CreatePost implements BlogService {
         post.setPostId(pDTO.getPostId());
         post.setPostTitle(pDTO.getPostTitle());
         post.setPostContent(pDTO.getPostContent());
-        post.setImageName(pDTO.getImageName());
-        post.setAddedDate(pDTO.getAddedDate());
+        post.setPostImageName(pDTO.getPostImageName());
+        post.setPostAddedDate(pDTO.getPostAddedDate());
         post.setUser(user);
         post.setCategory(category);
 
@@ -81,8 +82,8 @@ public class CreatePost implements BlogService {
         pResponseDTO = this.modelMapper.map(sPost, PostResponseDTO.class);
 
         /*----Simply Return The Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
+        response.setStatus(BlogAppConstants.STATUS);
+        response.setStatusCode(BlogAppConstants.STATUS_CODE);
         response.setMessage("Post Created Successfully");
         response.setData(pResponseDTO);
 

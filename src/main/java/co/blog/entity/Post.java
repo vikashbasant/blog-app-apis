@@ -28,10 +28,10 @@ public class Post {
     private String postContent;
 
     @Column(name = "postImageName")
-    private String imageName;
+    private String postImageName;
 
     @Column(name = "postAddedDate")
-    private Date addedDate;
+    private Date postAddedDate;
 
     @ManyToOne
     @JoinColumn(name = "categoryId")

@@ -29,10 +29,10 @@ public class PostDTO {
     @Size(min = 10, max = 800, message = "postContent minimum 10 & maximum 800 character are allowed")
     private String postContent;
 
-    private String imageName = "default.png";
+    private String postImageName = "default.png";
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
-    private Date addedDate = new Date();
+    private Date postAddedDate = new Date();
 
     private Integer categoryId;
 

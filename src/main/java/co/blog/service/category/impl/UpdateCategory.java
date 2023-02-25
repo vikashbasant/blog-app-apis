@@ -1,5 +1,6 @@
 package co.blog.service.category.impl;
 
+import co.blog.config.BlogAppConstants;
 import co.blog.entity.Category;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
@@ -46,21 +47,26 @@ public class UpdateCategory implements BlogService {
         Integer categoryId = (Integer) u;
 
         /*----First Find The Category With CategoryId----*/
-        cRepo.findById(categoryId).orElseThrow(() -> new GeneralException(
-                "Category Not Found With CategoryId = " + cDTO.getCategoryId()));
+        Optional<Category> category = Optional.ofNullable(cRepo.findById(categoryId).orElseThrow(() -> new GeneralException(
+                "Category Not Found With CategoryId = " + cDTO.getCategoryId())));
 
         /*----Then Simply Update The User----*/
-        cRepo.updateId(categoryId, cDTO.getCategoryDescription(), cDTO.getCategoryTitle());
+        if (category.isPresent()) {
+            category.get().setCategoryTitle(cDTO.getCategoryTitle());
+            category.get().setCategoryDescription(cDTO.getCategoryDescription());
+        }
 
-        Optional<Category> updatedCategory = cRepo.findById(categoryId);
+        /*----Then Simply Updated The Updated Category----*/
+        Category sCategory = cRepo.save(category.get());
+
 
         /*----Convert cDTO to CategoryResponseDTO----*/
-        cResponseDTO = this.modelMapper.map(updatedCategory, CategoryResponseDTO.class);
+        cResponseDTO = this.modelMapper.map(sCategory, CategoryResponseDTO.class);
 
         /*----Simply Return The Response----*/
-        response.setStatus("SUCCESS");
-        response.setStatusCode("200");
-        response.setMessage("Successfully Update The Category With CategoryId = " + cDTO.getCategoryId());
+        response.setStatus(BlogAppConstants.STATUS);
+        response.setStatusCode(BlogAppConstants.STATUS_CODE);
+        response.setMessage("Successfully Update The Category With CategoryId = " + categoryId);
         response.setData(cResponseDTO);
 
 

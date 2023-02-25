@@ -10,9 +10,8 @@ import javax.transaction.Transactional;
 
 @EnableJpaRepositories
 public interface UserRepo extends JpaRepository<User, Integer> {
-
     @Transactional
     @Modifying
-    @Query(value = "update User u set u.about = ?5, u.password = ?4, u.email = ?3, u.name = ?2 where u.id = ?1")
+    @Query(value = "update User u set u.userAbout = ?5, u.userPassword = ?4, u.userEmail = ?3, u.userName = ?2 where u.userId = ?1")
     void updateId (Integer id, String name, String email, String password, String about);
 }
