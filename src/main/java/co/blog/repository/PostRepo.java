@@ -10,8 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 @EnableJpaRepositories
 public interface PostRepo extends JpaRepository<Post, Integer> {
     Page<Post> findByCategory (Category category, Pageable pageable);
