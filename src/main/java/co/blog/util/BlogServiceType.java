@@ -24,5 +24,9 @@ public enum BlogServiceType {
     GET_ALL_POST,
     UPDATE_POST,
     DELETE_POST,
-    SEARCH_POST
+    SEARCH_POST,
+
+    /*----For File Service-----*/
+    UPLOAD_IMAGE,
+    GET_RESOURCE
 }

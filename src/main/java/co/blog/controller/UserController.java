@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -30,7 +31,7 @@ public class UserController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @PostMapping("/create")
-    public ResponseEntity<Response> createUser (@RequestBody @Valid UserDTO request) throws GeneralException {
+    public ResponseEntity<Response> createUser (@RequestBody @Valid UserDTO request) throws GeneralException, IOException {
         log.info("===: UserController:: Inside createUser Method :===");
         BlogService service = factory.getService(BlogServiceType.CREATE_USER);
         Response response = service.executeService(request, "");
@@ -44,7 +45,7 @@ public class UserController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @PutMapping("/update/{userId}")
-    public ResponseEntity<Response> updateUser (@RequestBody @Valid UserDTO request, @PathVariable @Valid Integer userId) throws GeneralException {
+    public ResponseEntity<Response> updateUser (@RequestBody @Valid UserDTO request, @PathVariable @Valid Integer userId) throws GeneralException, IOException {
         log.info("===: UserController:: Inside updateUser Method :===");
         BlogService service = factory.getService(BlogServiceType.UPDATE_USER);
         Response response = service.executeService(request, userId);
@@ -58,7 +59,7 @@ public class UserController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @GetMapping("/get-user/{userId}")
-    public ResponseEntity<Response> getUser (@PathVariable @Valid Integer userId) throws GeneralException {
+    public ResponseEntity<Response> getUser (@PathVariable @Valid Integer userId) throws GeneralException, IOException {
         log.info("===: UserController:: Inside getUser Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_USER);
         Response response = service.executeService(userId, "");
@@ -71,7 +72,7 @@ public class UserController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @GetMapping("/get-all-user")
-    public ResponseEntity<Response> getAllUsers () throws GeneralException {
+    public ResponseEntity<Response> getAllUsers () throws GeneralException, IOException {
         log.info("===: UserController:: Inside getAllUsers Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_ALL_USER);
         Response response = service.executeService("", "");
@@ -87,7 +88,7 @@ public class UserController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @DeleteMapping("/delete-user/{userId}")
-    public ResponseEntity<Response> deleteUser (@PathVariable("userId") @Valid Integer uId) throws GeneralException {
+    public ResponseEntity<Response> deleteUser (@PathVariable("userId") @Valid Integer uId) throws GeneralException, IOException {
         log.info("===: UserController:: Inside deleteUser Method :===");
         BlogService service = factory.getService(BlogServiceType.DELETE_USER);
         Response response = service.executeService(uId, "");

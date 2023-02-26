@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 
 @RestController
@@ -36,7 +37,7 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @PostMapping("/create")
-    public ResponseEntity<Response> createPost(@RequestBody @Valid PostDTO postDTO) throws GeneralException {
+    public ResponseEntity<Response> createPost(@RequestBody @Valid PostDTO postDTO) throws GeneralException, IOException {
         log.info("===: PostController:: Inside CreatePost Method :===");
         BlogService service = factory.getService(BlogServiceType.CREATE_POST);
         Response response = service.executeService(postDTO, "");
@@ -51,7 +52,7 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give the Exception
      */
     @GetMapping("/get-post/{postId}")
-    public ResponseEntity<Response> getPost(@PathVariable @Valid Integer postId) throws GeneralException {
+    public ResponseEntity<Response> getPost(@PathVariable @Valid Integer postId) throws GeneralException, IOException {
         log.info("===: PostController:: Inside GetPost Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_POST);
         Response response = service.executeService(postId, "");
@@ -69,7 +70,7 @@ public class PostController {
             @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", defaultValue = BlogAppConstants.PAGE_SIZE, required = false) Integer pageSize,
             @RequestParam(value = "sortBy", defaultValue = BlogAppConstants.SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = BlogAppConstants.SORT_DIR, required = false) String sortDir) throws GeneralException {
+            @RequestParam(value = "sortDir", defaultValue = BlogAppConstants.SORT_DIR, required = false) String sortDir) throws GeneralException, IOException {
 
         log.info("===: PostController:: Inside GetAllPosts Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_ALL_POST);
@@ -97,7 +98,7 @@ public class PostController {
             @RequestParam(value = "pageSize", defaultValue = BlogAppConstants.PAGE_SIZE, required = false) Integer pageSize,
             @RequestParam(value = "sortBy", defaultValue = BlogAppConstants.SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = BlogAppConstants.SORT_DIR, required = false) String sortDir,
-            @PathVariable @Valid Integer categoryId) throws GeneralException {
+            @PathVariable @Valid Integer categoryId) throws GeneralException, IOException {
 
         log.info("===: PostController:: Inside GetPostsByCategory Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_POST_BY_CATEGORY_ID);
@@ -125,7 +126,7 @@ public class PostController {
             @RequestParam(value = "pageSize", defaultValue = BlogAppConstants.PAGE_SIZE, required = false) Integer pageSize,
             @RequestParam(value = "sortBy", defaultValue = BlogAppConstants.SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = BlogAppConstants.SORT_DIR, required = false) String sortDir,
-            @PathVariable @Valid Integer userId) throws GeneralException {
+            @PathVariable @Valid Integer userId) throws GeneralException, IOException {
 
         log.info("===: PostController:: Inside GetPostsByUser Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_POST_BY_USER_ID);
@@ -152,7 +153,7 @@ public class PostController {
     @PutMapping("/update-post/{postId}")
     public ResponseEntity<Response> updatePost (
             @RequestBody @Valid PostDTO postDTO,
-            @PathVariable @Valid Integer postId) throws GeneralException {
+            @PathVariable @Valid Integer postId) throws GeneralException, IOException {
         log.info("===: PostController:: Inside UpdatePost Method :===");
         BlogService service = factory.getService(BlogServiceType.UPDATE_POST);
         Response response = service.executeService(postDTO, postId);
@@ -166,7 +167,7 @@ public class PostController {
      * @throws GeneralException If AnyThing goes wrong then give this Exception
      */
     @DeleteMapping("/delete-post/{postId}")
-    public ResponseEntity<Response> deletePost (@PathVariable @Valid Integer postId) throws GeneralException {
+    public ResponseEntity<Response> deletePost (@PathVariable @Valid Integer postId) throws GeneralException, IOException {
         log.info("===: PostController:: Inside DeletePost Method :===");
         BlogService service = factory.getService(BlogServiceType.DELETE_POST);
         Response response = service.executeService(postId, "");
@@ -180,7 +181,7 @@ public class PostController {
             @RequestParam(value = "pageSize", defaultValue = BlogAppConstants.PAGE_SIZE, required = false) Integer pageSize,
             @RequestParam(value = "sortBy", defaultValue = BlogAppConstants.SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = BlogAppConstants.SORT_DIR, required = false) String sortDir,
-            @PathVariable @Valid String keyword) throws GeneralException{
+            @PathVariable @Valid String keyword) throws GeneralException, IOException {
 
         log.info("===: PostController:: Inside SearchPost Method :===");
         BlogService service = factory.getService(BlogServiceType.SEARCH_POST);

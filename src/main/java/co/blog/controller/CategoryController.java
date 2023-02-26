@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -29,7 +30,7 @@ public class CategoryController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @PostMapping("/create")
-    public ResponseEntity<Response> createCategory (@RequestBody @Valid CategoryDTO request) throws GeneralException {
+    public ResponseEntity<Response> createCategory (@RequestBody @Valid CategoryDTO request) throws GeneralException, IOException {
         log.info("===: CategoryController:: Inside createCategory Method :===");
         BlogService service = factory.getService(BlogServiceType.CREATE_CATEGORY);
         Response response = service.executeService(request, "");
@@ -44,7 +45,7 @@ public class CategoryController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @PutMapping("/update/{categoryId}")
-    public ResponseEntity<Response> updateCategory (@RequestBody @Valid CategoryDTO request, @PathVariable @Valid Integer categoryId) throws GeneralException {
+    public ResponseEntity<Response> updateCategory (@RequestBody @Valid CategoryDTO request, @PathVariable @Valid Integer categoryId) throws GeneralException, IOException {
         log.info("===: CategoryController:: Inside updateCategory Method :===");
         BlogService service = factory.getService(BlogServiceType.UPDATE_CATEGORY);
         Response response = service.executeService(request, categoryId);
@@ -58,7 +59,7 @@ public class CategoryController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @GetMapping("/get-category/{categoryId}")
-    public ResponseEntity<Response> getCategory (@PathVariable @Valid Integer categoryId) throws GeneralException {
+    public ResponseEntity<Response> getCategory (@PathVariable @Valid Integer categoryId) throws GeneralException, IOException {
         log.info("===: CategoryController:: Inside getCategory Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_CATEGORY);
         Response response = service.executeService(categoryId, "");
@@ -71,7 +72,7 @@ public class CategoryController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @GetMapping("/get-all-category")
-    public ResponseEntity<Response> getAllUsers () throws GeneralException {
+    public ResponseEntity<Response> getAllUsers () throws GeneralException, IOException {
         log.info("===: CategoryController:: Inside getAllUsers Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_ALL_CATEGORY);
         Response response = service.executeService("", "");
@@ -87,7 +88,7 @@ public class CategoryController {
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
     @DeleteMapping("/delete-category/{categoryId}")
-    public ResponseEntity<Response> deleteUser (@PathVariable("categoryId") @Valid Integer cId) throws GeneralException {
+    public ResponseEntity<Response> deleteUser (@PathVariable("categoryId") @Valid Integer cId) throws GeneralException, IOException {
         log.info("===: CategoryController:: Inside deleteUser Method :===");
         BlogService service = factory.getService(BlogServiceType.DELETE_CATEGORY);
         Response response = service.executeService(cId, "");
