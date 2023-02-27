@@ -28,5 +28,6 @@ public enum BlogServiceType {
 
     /*----For File Service-----*/
     UPLOAD_IMAGE,
+    DELETE_IMAGE,
     GET_RESOURCE
 }

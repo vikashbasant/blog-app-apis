@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -44,6 +45,23 @@ public class FileController {
         BlogService service = factory.getService(BlogServiceType.UPLOAD_IMAGE);
         Response response = service.executeService(path, image);
         return ResponseEntity.ok(response);
+    }
+
+
+    /**
+     * This API are used to Delete the Image File
+     * @param imageName passing an imageName as argument
+     * @return Response Object
+     * @throws GeneralException If anything goes wrong then this exception will generate.
+     * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
+     */
+    @DeleteMapping("/delete-image/{imageName}")
+    public ResponseEntity<Response> deleteImage (@PathVariable @Valid String imageName) throws GeneralException, IOException {
+        log.info("===: FileController:: Inside deleteImage Method :===");
+        BlogService service = factory.getService(BlogServiceType.DELETE_IMAGE);
+        Response response = service.executeService(path, imageName);
+        return ResponseEntity.ok(response);
+
     }
 
 
