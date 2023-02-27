@@ -182,6 +182,17 @@ public class PostController {
     }
 
 
+    /**
+     * This API are used to searchPost
+     * @param pageNumber passing pageNumber as an RequestParam
+     * @param pageSize passing pageSize as an RequestParam
+     * @param sortBy passing sortBy as an RequestParam
+     * @param sortDir passing sortDir as an RequestParam
+     * @param keyword passing keyword as an PathVariable
+     * @return return postResponse
+     * @throws GeneralException If AnyThing goes wrong then give this Exception
+     * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
+     */
     @GetMapping("/search-by-title/{keyword}")
     public ResponseEntity<Response> searchPost(
             @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
@@ -205,8 +216,18 @@ public class PostController {
     }
 
 
+    /**
+     * This API are used to uploadPostImage
+     * @param image passing image as an RequestParam
+     * @param postId passing postId as an PathVariable
+     * @return return response
+     * @throws GeneralException If AnyThing goes wrong then give this Exception.
+     * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
+     */
     @PostMapping("/image/upload/{postId}")
-    public ResponseEntity<Response> uploadPostImage (@RequestParam("image") MultipartFile image,@PathVariable @Valid Integer postId) throws GeneralException, IOException {
+    public ResponseEntity<Response> uploadPostImage (
+            @RequestParam("image") MultipartFile image,
+            @PathVariable @Valid Integer postId) throws GeneralException, IOException {
 
         log.info("===: PostController:: Inside uploadPostImage Method :===");
 
@@ -234,7 +255,38 @@ public class PostController {
 
         return updatedPost;
 
+    }
 
+
+    @DeleteMapping("/image/delete/{postId}")
+    public ResponseEntity<Response> deletePostImage (
+            @PathVariable @Valid Integer postId) throws GeneralException, IOException {
+
+        log.info("===: PostController:: Inside deletePostImage Method :===");
+
+        // Fetch Post With PostId:
+        PostResponseDTO getPostWithPostId =
+                (PostResponseDTO) Objects.requireNonNull(getPost(postId).getBody()).getData();
+
+        // Fetch The ImageName from postId:
+        String imageName = getPostWithPostId.getImageName();
+
+        BlogService service = factory.getService(BlogServiceType.DELETE_IMAGE);
+        Response response = service.executeService(imageName, path);
+
+
+        // Now Fetch Data from getPostWithPostId and set into PostDTO:
+        PostDTO pDTO = new PostDTO();
+        pDTO.setPostId(getPostWithPostId.getPostId());
+        pDTO.setPostTitle(getPostWithPostId.getPostTitle());
+        pDTO.setPostContent(getPostWithPostId.getPostContent());
+        pDTO.setPostImageName(BlogAppConstants.DEFAULT_IMAGE_NAME);
+        pDTO.setCategoryId(getPostWithPostId.getCategory().getCategoryId());
+        pDTO.setUserId(getPostWithPostId.getUser().getUserId());
+
+        // Now Simply update the post:
+        ResponseEntity<Response> updatedPost = updatePost(pDTO, postId);
+        return updatedPost;
 
     }
 }

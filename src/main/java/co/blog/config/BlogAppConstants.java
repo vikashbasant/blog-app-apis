@@ -11,4 +11,6 @@ public class BlogAppConstants {
 
     public static final String STATUS_CODE = "200";
 
+    public static final String DEFAULT_IMAGE_NAME = "default.png";
+
 }

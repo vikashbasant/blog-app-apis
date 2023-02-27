@@ -1,5 +1,6 @@
 package co.blog.payloads.pDTO;
 
+import co.blog.config.BlogAppConstants;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +30,7 @@ public class PostDTO {
     @Size(min = 10, max = 800, message = "postContent minimum 10 & maximum 800 character are allowed")
     private String postContent;
 
-    private String postImageName = "default.png";
+    private String postImageName = BlogAppConstants.DEFAULT_IMAGE_NAME;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date postAddedDate = new Date();
