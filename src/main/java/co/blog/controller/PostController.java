@@ -5,23 +5,30 @@ import co.blog.exception.GeneralException;
 import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
 import co.blog.payloads.pDTO.PostDTO;
+import co.blog.payloads.pDTO.PostResponseDTO;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceFactory;
 import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Objects;
 
 
 @RestController
 @RequestMapping(value = "/posts")
 @Slf4j
 public class PostController {
+
+    @Value("${project.image}")
+    private String path;
 
     @Autowired
     private BlogServiceFactory factory;
@@ -195,5 +202,39 @@ public class PostController {
 
         Response response = service.executeService(keyword, paginationDTO);
         return ResponseEntity.ok(response);
+    }
+
+
+    @PostMapping("/image/upload/{postId}")
+    public ResponseEntity<Response> uploadPostImage (@RequestParam("image") MultipartFile image,@PathVariable @Valid Integer postId) throws GeneralException, IOException {
+
+        log.info("===: PostController:: Inside uploadPostImage Method :===");
+
+        // Fetch Post With PostId:
+        PostResponseDTO getPostWithPostId =
+                (PostResponseDTO) Objects.requireNonNull(getPost(postId).getBody()).getData();
+
+        BlogService service = factory.getService(BlogServiceType.UPLOAD_IMAGE);
+        Response response = service.executeService(path, image);
+
+        // Fetch The Image File Name From Response:
+        String imageFileName = (String) response.getData();
+
+        // Now Fetch Data from getPostWithPostId and set into PostDTO:
+        PostDTO pDTO = new PostDTO();
+        pDTO.setPostId(getPostWithPostId.getPostId());
+        pDTO.setPostTitle(getPostWithPostId.getPostTitle());
+        pDTO.setPostContent(getPostWithPostId.getPostContent());
+        pDTO.setPostImageName(imageFileName);
+        pDTO.setCategoryId(getPostWithPostId.getCategory().getCategoryId());
+        pDTO.setUserId(getPostWithPostId.getUser().getUserId());
+
+        // Now Simply update the post:
+        ResponseEntity<Response> updatedPost = updatePost(pDTO, postId);
+
+        return updatedPost;
+
+
+
     }
 }
