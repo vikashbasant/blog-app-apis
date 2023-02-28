@@ -13,12 +13,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 
@@ -318,5 +322,37 @@ public class PostController {
 
         // Now Simply Upload The Post Image:
         return uploadPostImage(image, postId);
+    }
+
+    /**
+     * This API are used to Serve the image file
+     * @param postId passing an argument as a PathVariable
+     * @param response return response as HttpServletResponse
+     * @throws GeneralException If anything goes wrong then this exception will generate.
+     * @throws IOException  In any situation where input/output operations are involved, and there is an error or
+     * failure in the operation.
+     */
+    @GetMapping(value = "/profile/{postId}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public void downloadImage(@PathVariable("postId") Integer postId, HttpServletResponse response) throws GeneralException, IOException {
+
+
+        // Fetch Post With PostId:
+        PostResponseDTO getPostWithPostId =
+                (PostResponseDTO) Objects.requireNonNull(getPost(postId).getBody()).getData();
+
+        String imageName = getPostWithPostId.getImageName();
+
+        log.info("===: PostController:: Inside downloadImage Method :===");
+        BlogService service = factory.getService(BlogServiceType.GET_RESOURCE);
+        Response resource = service.executeService(path, imageName);
+
+        // Fetch the InputStream from the resource:
+        InputStream iStream = (InputStream) resource.getData();
+
+        // set the ContentType to HttpServletResponse
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+
+        StreamUtils.copy(iStream, response.getOutputStream());
+
     }
 }
