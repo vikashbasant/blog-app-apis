@@ -218,8 +218,8 @@ public class PostController {
 
     /**
      * This API are used to uploadPostImage
-     * @param image passing image as an RequestParam
-     * @param postId passing postId as an PathVariable
+     * @param image passing image as an RequestParam argument.
+     * @param postId passing postId as an PathVariable argument.
      * @return return response
      * @throws GeneralException If AnyThing goes wrong then give this Exception.
      * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
@@ -258,6 +258,13 @@ public class PostController {
     }
 
 
+    /**
+     * This API are used to deletePostImage
+     * @param postId passing postId as an argument within PathVariable
+     * @return return PostResponseDTO
+     * @throws GeneralException If anything goes wrong then this exception will generate.
+     * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
+     */
     @DeleteMapping("/image/delete/{postId}")
     public ResponseEntity<Response> deletePostImage (
             @PathVariable @Valid Integer postId) throws GeneralException, IOException {
@@ -285,8 +292,31 @@ public class PostController {
         pDTO.setUserId(getPostWithPostId.getUser().getUserId());
 
         // Now Simply update the post:
-        ResponseEntity<Response> updatedPost = updatePost(pDTO, postId);
-        return updatedPost;
+        return updatePost(pDTO, postId);
 
+    }
+
+    /**
+     * This API are used to updatePostImage
+     * @param image passing image as an Multipart argument.
+     * @param postId passing postId as an PathVariable argument.
+     * @return return PostResponseDTO
+     * @throws GeneralException If anything goes wrong then this exception will generate.
+     * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
+     */
+
+
+    @PutMapping("/image/update/{postId}")
+    public ResponseEntity<Response> updatePostImage (
+            @RequestParam("image") MultipartFile image,
+            @PathVariable @Valid Integer postId) throws GeneralException, IOException {
+
+        log.info("===: PostController:: Inside updatePostImage Method :===");
+
+        // First Delete The Post Image With postId:
+        deletePostImage(postId);
+
+        // Now Simply Upload The Post Image:
+        return uploadPostImage(image, postId);
     }
 }

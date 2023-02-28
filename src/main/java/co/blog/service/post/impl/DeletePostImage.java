@@ -31,15 +31,15 @@ public class DeletePostImage implements BlogService {
 
         log.info("===: DeletePostImage:: Inside executeService Method :===");
 
-        String path = (String) t;
-        String imageName = (String) u;
+        String path = (String) u;
+        String imageName = (String) t;
 
 
         // Full Path
         String filePath = path + File.separator + imageName;
 
-        // Create Folder if not created
-        File f = new File(path);
+        // Delete File From Local:
+        File f = new File(filePath);
         if (f.exists()) {
             Files.delete(Paths.get(filePath));
         }
