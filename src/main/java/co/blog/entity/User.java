@@ -38,4 +38,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
     private Set<Post> posts = new TreeSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
+    private Set<Comment> comments = new TreeSet<>();
+
 }

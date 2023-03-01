@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @NoArgsConstructor
@@ -40,6 +42,9 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private Set<Comment> comments = new TreeSet<>();
 
 
 
