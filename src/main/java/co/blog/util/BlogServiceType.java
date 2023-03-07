@@ -35,5 +35,9 @@ public enum BlogServiceType {
     CREATE_COMMENT,
     DELETE_COMMENT,
     UPDATE_COMMENT,
-    GET_COMMENT
+    GET_COMMENT,
+
+
+    /*---- For Auth Service ----*/
+    LOGIN
 }

@@ -1,5 +1,6 @@
 package co.blog.payloads.uDTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class UserResponseDTO {
     private int userId;
     private String userName;
     private String userEmail;
+    @JsonIgnore
     private String userPassword;
     private String userAbout;
 }

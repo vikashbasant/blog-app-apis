@@ -2,6 +2,8 @@ package co.blog.controller;
 
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -96,7 +99,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
         return ResponseEntity.ok().body(getResponse(ex.getMessage(), "IOE"));
     }
 
-    /*----Handle The Custom Exception .----*/
+    /*----Handle The Custom Exception.----*/
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllException (final Exception ex, final WebRequest request) {
         log.info("===: ExceptionController:: Inside handleAllException Method :===");
@@ -104,6 +107,30 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
         return ResponseEntity.ok().body(getResponse(ex.getMessage(), "500"));
     }
 
+
+    /*----- Handle The Custom ExpiredJwtException----*/
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Object> handleExpiredJwtException(final Exception ex, final WebRequest request) {
+        log.info("===: ExceptionController:: Inside handleExpiredJwtException Method :===");
+
+        return ResponseEntity.ok().body(getResponse(ex.getMessage(), "401"));
+    }
+
+
+    /*----- Handle The Custom MalformedJwtException----*/
+    @ExceptionHandler(MalformedJwtException.class)
+    public ResponseEntity<Object> handleMalformedJwtException(final Exception ex, final WebRequest request) {
+        log.info("===: ExceptionController:: Inside handleMalformedJwtException Method :===");
+        return ResponseEntity.ok().body(getResponse(ex.getMessage(), "500"));
+    }
+
+
+    /*----- Handle The Custom MalformedJwtException----*/
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Object> handleBadCredentialsException(final Exception ex, final WebRequest request) {
+        log.info("===: ExceptionController:: Inside handleBadCredentialsException Method :===");
+        return ResponseEntity.ok().body(getResponse(ex.getMessage(), "401"));
+    }
 
     //Invoked first to determine if this interceptor applies.
     @Override
