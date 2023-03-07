@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -87,6 +88,8 @@ public class UserController {
      * @return UserResponseDTO
      * @throws GeneralException If AnyThing goes wrong then gives the Exception
      */
+    /*---- Only Admin Can Delete The User ----*/
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete-user/{userId}")
     public ResponseEntity<Response> deleteUser (@PathVariable("userId") @Valid Integer uId) throws GeneralException, IOException {
         log.info("===: UserController:: Inside deleteUser Method :===");
