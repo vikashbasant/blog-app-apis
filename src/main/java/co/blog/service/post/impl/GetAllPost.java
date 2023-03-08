@@ -71,7 +71,7 @@ public class GetAllPost implements BlogService {
         }
 
         /*----Convert listOfPost into PostResponseDTO----*/
-        List<PostResponseDTO> listOfPost = allPost.stream().map((post) -> modelMapper.map(post, PostResponseDTO.class)).collect(Collectors.toList());
+        List<PostResponseDTO> listOfPost = allPost.stream().map(post -> modelMapper.map(post, PostResponseDTO.class)).collect(Collectors.toList());
 
         /*----Now Simply Return Response----*/
         postResponse.setStatus(BlogAppConstants.STATUS);

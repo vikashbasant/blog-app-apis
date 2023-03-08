@@ -22,7 +22,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Setter
 @Getter
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints=
+@UniqueConstraint(columnNames={"userId", "userEmail"}))
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,10 +33,11 @@ public class User implements UserDetails {
     @Column(name = "userName", nullable = false, length = 100)
     private String userName;
 
-    @Column(name = "userEmail")
+
+    @Column(name = "userEmail", nullable = false, length = 100, unique = true)
     private String userEmail;
 
-    @Column(name = "userPassword")
+    @Column(name = "userPassword", nullable = false, length = 15)
     private String userPassword;
 
     @Column(name = "userAbout")

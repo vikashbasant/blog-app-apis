@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.validation.constraints.*;
 
 @NoArgsConstructor
@@ -25,6 +26,7 @@ public class UserDTO {
     @NotEmpty(message = "Email can't be Empty")
     @Email
     @Pattern(regexp = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6}$", message = "Please Enter Valid Email!")
+    @Column(unique = true)
     private String userEmail;
 
     @NotNull(message = "password can't be Null")

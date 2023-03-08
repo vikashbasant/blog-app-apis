@@ -3,6 +3,7 @@ package co.blog.util;
 public enum BlogServiceType {
 
     /*---- For User ----*/
+    REGISTER_USER,
     CREATE_USER,
     UPDATE_USER,
     GET_USER,
