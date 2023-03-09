@@ -1,10 +1,8 @@
 package co.blog.payloads.pDTO;
 
 
-import co.blog.entity.Comment;
 import co.blog.payloads.cDTO.CategoryDTO;
 import co.blog.payloads.commentDTO.CommentDTO;
-import co.blog.payloads.uDTO.UserDTO;
 import co.blog.payloads.uDTO.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

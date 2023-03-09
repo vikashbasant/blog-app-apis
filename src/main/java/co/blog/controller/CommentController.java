@@ -2,7 +2,6 @@ package co.blog.controller;
 
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.cDTO.CategoryDTO;
 import co.blog.payloads.commentDTO.CommentDTO;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceFactory;

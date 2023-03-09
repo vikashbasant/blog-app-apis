@@ -8,7 +8,6 @@ import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.commentDTO.CommentDTO;
 import co.blog.payloads.commentDTO.CommentResponseDTO;
-import co.blog.payloads.pDTO.PostResponseDTO;
 import co.blog.repository.CommentRepo;
 import co.blog.repository.PostRepo;
 import co.blog.repository.UserRepo;

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import static co.blog.config.RoleConstants.*;
+import static co.blog.config.RoleConstants.ADMIN_USER_NAME;
 
 @Component
 @Slf4j

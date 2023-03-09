@@ -3,7 +3,6 @@ package co.blog.controller;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.payloads.auth.JwtAuthRequest;
-import co.blog.payloads.auth.JwtAuthResponse;
 import co.blog.payloads.uDTO.UserDTO;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceFactory;

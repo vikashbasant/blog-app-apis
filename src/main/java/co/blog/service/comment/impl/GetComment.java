@@ -2,15 +2,10 @@ package co.blog.service.comment.impl;
 
 import co.blog.config.BlogAppConstants;
 import co.blog.entity.Comment;
-import co.blog.entity.Post;
-import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.commentDTO.CommentDTO;
 import co.blog.payloads.commentDTO.CommentResponseDTO;
 import co.blog.repository.CommentRepo;
-import co.blog.repository.PostRepo;
-import co.blog.repository.UserRepo;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;

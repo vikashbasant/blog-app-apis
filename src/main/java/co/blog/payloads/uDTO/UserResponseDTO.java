@@ -1,9 +1,5 @@
 package co.blog.payloads.uDTO;
 
-import co.blog.entity.Role;
-import co.blog.payloads.commentDTO.CommentDTO;
-import co.blog.payloads.commentDTO.CommentResponseDTO;
-import co.blog.payloads.pDTO.PostResponseDTO;
 import co.blog.payloads.rDTO.RoleDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
