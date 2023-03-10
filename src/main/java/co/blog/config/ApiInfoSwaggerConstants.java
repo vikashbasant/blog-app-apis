@@ -7,6 +7,15 @@ import java.util.Collections;
 
 public class ApiInfoSwaggerConstants {
 
+    public static final String API_KEY_NAME = "JWT";
+    public static final String API_KEY_AUTHORIZATION_HEADER = "Authorization";
+    public static final String API_KEY_HEADER = "header";
+
+    public static final String AUTHORIZATION_SCOPE = "global";
+    public static final String AUTHORIZATION_DESCRIPTION = "accessEverything";
+    public static final String SECURITY_REFERENCE = "JWT";
+
+
     public static final String TITLE = "Blogging Backend Application";
     public static final String DESCRIPTION = "This is Blogging Backend Application which developed using " +
             "Spring Boot & Developed By Vikash Kumar Basant";
