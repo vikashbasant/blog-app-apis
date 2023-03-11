@@ -41,12 +41,7 @@ public class PostController {
     private PaginationDTO paginationDTO;
 
 
-    /**
-     * Purpose of this api is CreatePost:
-     * @param postDTO Passing the postDTO object as argument
-     * @return PostResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
+
     @PostMapping("/create")
     public ResponseEntity<Response> createPost(@RequestBody @Valid PostDTO postDTO) throws GeneralException, IOException {
         log.info("===: PostController:: Inside CreatePost Method :===");
@@ -56,12 +51,7 @@ public class PostController {
     }
 
 
-    /**
-     * Purpose of this api is GetPost
-     * @param postId passing as argument
-     * @return PostResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then give the Exception
-     */
+
     @GetMapping("/get-post/{postId}")
     public ResponseEntity<Response> getPost(@PathVariable @Valid Integer postId) throws GeneralException, IOException {
         log.info("===: PostController:: Inside GetPost Method :===");
@@ -71,11 +61,7 @@ public class PostController {
     }
 
 
-    /**
-     * Purpose of this api is GetAllPost
-     * @return list of PostResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then give the Exception
-     */
+
     @GetMapping("/get-all-post")
     public ResponseEntity<Response> getAllPosts(
             @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
@@ -97,12 +83,7 @@ public class PostController {
     }
 
 
-    /**
-     * Purpose of this api is GetPostsByCategoryId
-     * @param categoryId passing as argument
-     * @return PostResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then give this Exception
-     */
+
     @GetMapping("/get-posts-by-category/{categoryId}")
     public ResponseEntity<Response> getPostsByCategory(
             @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
@@ -125,12 +106,7 @@ public class PostController {
     }
 
 
-    /**
-     * Purpose of this api is GetPostsByUserId
-     * @param userId passing as argument
-     * @return PostResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then give this Exception
-     */
+
     @GetMapping("/get-posts-by-user/{userId}")
     public ResponseEntity<Response> getPostsByUser(
             @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
@@ -154,13 +130,7 @@ public class PostController {
     }
 
 
-    /**
-     * Purpose of this api is UpdatePost
-     * @param postDTO passing as argument
-     * @param postId passing as argument
-     * @return PostResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then give this Exception
-     */
+
     @PutMapping("/update-post/{postId}")
     public ResponseEntity<Response> updatePost (
             @RequestBody @Valid PostDTO postDTO,
@@ -171,12 +141,7 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * Purpose of this api DeletePost
-     * @param postId passing as argument
-     * @return PostResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then give this Exception
-     */
+
     @DeleteMapping("/delete-post/{postId}")
     public ResponseEntity<Response> deletePost (@PathVariable @Valid Integer postId) throws GeneralException, IOException {
         log.info("===: PostController:: Inside DeletePost Method :===");
@@ -186,17 +151,7 @@ public class PostController {
     }
 
 
-    /**
-     * This API are used to searchPost
-     * @param pageNumber passing pageNumber as an RequestParam
-     * @param pageSize passing pageSize as an RequestParam
-     * @param sortBy passing sortBy as an RequestParam
-     * @param sortDir passing sortDir as an RequestParam
-     * @param keyword passing keyword as an PathVariable
-     * @return return postResponse
-     * @throws GeneralException If AnyThing goes wrong then give this Exception
-     * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
-     */
+
     @GetMapping("/search-by-title/{keyword}")
     public ResponseEntity<Response> searchPost(
             @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
@@ -220,14 +175,7 @@ public class PostController {
     }
 
 
-    /**
-     * This API are used to uploadPostImage
-     * @param image passing image as an RequestParam argument.
-     * @param postId passing postId as an PathVariable argument.
-     * @return return response
-     * @throws GeneralException If AnyThing goes wrong then give this Exception.
-     * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
-     */
+
     @PostMapping("/image/upload/{postId}")
     public ResponseEntity<Response> uploadPostImage (
             @RequestParam("image") MultipartFile image,
@@ -262,13 +210,7 @@ public class PostController {
     }
 
 
-    /**
-     * This API are used to deletePostImage
-     * @param postId passing postId as an argument within PathVariable
-     * @return return PostResponseDTO
-     * @throws GeneralException If anything goes wrong then this exception will generate.
-     * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
-     */
+
     @DeleteMapping("/image/delete/{postId}")
     public ResponseEntity<Response> deletePostImage (
             @PathVariable @Valid Integer postId) throws GeneralException, IOException {
@@ -300,14 +242,6 @@ public class PostController {
 
     }
 
-    /**
-     * This API are used to updatePostImage
-     * @param image passing image as an Multipart argument.
-     * @param postId passing postId as an PathVariable argument.
-     * @return return PostResponseDTO
-     * @throws GeneralException If anything goes wrong then this exception will generate.
-     * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
-     */
 
 
     @PutMapping("/image/update/{postId}")
@@ -324,14 +258,7 @@ public class PostController {
         return uploadPostImage(image, postId);
     }
 
-    /**
-     * This API are used to Serve the image file
-     * @param postId passing an argument as a PathVariable
-     * @param response return response as HttpServletResponse
-     * @throws GeneralException If anything goes wrong then this exception will generate.
-     * @throws IOException  In any situation where input/output operations are involved, and there is an error or
-     * failure in the operation.
-     */
+
     @GetMapping(value = "/profile/{postId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public void downloadImage(@PathVariable("postId") Integer postId, HttpServletResponse response) throws GeneralException, IOException {
 

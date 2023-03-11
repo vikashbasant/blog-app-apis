@@ -23,12 +23,7 @@ public class CategoryController {
     @Autowired
     private BlogServiceFactory factory;
 
-    /**
-     * For Create Category API Here @Valid Annotation used for Enable the Validation:
-     * @param request CategoryDTO
-     * @return CategoryResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
+
     @PostMapping("/create")
     public ResponseEntity<Response> createCategory (@RequestBody @Valid CategoryDTO request) throws GeneralException, IOException {
         log.info("===: CategoryController:: Inside createCategory Method :===");
@@ -38,12 +33,7 @@ public class CategoryController {
     }
 
 
-    /**
-     * For UpdateCategory API
-     * @param request CategoryDTO
-     * @return CategoryResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
+
     @PutMapping("/update/{categoryId}")
     public ResponseEntity<Response> updateCategory (@RequestBody @Valid CategoryDTO request, @PathVariable @Valid Integer categoryId) throws GeneralException, IOException {
         log.info("===: CategoryController:: Inside updateCategory Method :===");
@@ -52,12 +42,7 @@ public class CategoryController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * For Get Single Category
-     * @param categoryId Pass The categoryId
-     * @return categoryResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
+
     @GetMapping("/get-category/{categoryId}")
     public ResponseEntity<Response> getCategory (@PathVariable @Valid Integer categoryId) throws GeneralException, IOException {
         log.info("===: CategoryController:: Inside getCategory Method :===");
@@ -66,11 +51,6 @@ public class CategoryController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * For Get All Category
-     * @return list of CategoryResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
     @GetMapping("/get-all-category")
     public ResponseEntity<Response> getAllUsers () throws GeneralException, IOException {
         log.info("===: CategoryController:: Inside getAllUsers Method :===");
@@ -81,12 +61,7 @@ public class CategoryController {
     }
 
 
-    /**
-     * @purpose For Delete Category With CategoryId
-     * @param cId
-     * @return CategoryResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
+
     @DeleteMapping("/delete-category/{categoryId}")
     public ResponseEntity<Response> deleteUser (@PathVariable("categoryId") @Valid Integer cId) throws GeneralException, IOException {
         log.info("===: CategoryController:: Inside deleteUser Method :===");

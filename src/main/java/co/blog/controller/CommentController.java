@@ -23,13 +23,7 @@ public class CommentController {
     @Autowired
     private BlogServiceFactory factory;
 
-    /**
-     * This API are used to CreateComment
-     * @param request passing request as an RequestBody argument.
-     * @return return response.
-     * @throws GeneralException If anything goes wrong then this exception will generate.
-     * @throws IOException In any situation where input/output operations are involved, and there is an error or failure in the operation.
-     */
+
     @PostMapping("/create")
     public ResponseEntity<Response> createComment (@RequestBody @Valid CommentDTO request) throws GeneralException,
             IOException {
@@ -39,13 +33,7 @@ public class CommentController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    /**
-     * This API are used to DeleteComment
-     * @param commentId passing commentId as an PathVariable argument.
-     * @return return response.
-     * @throws GeneralException If anything goes wrong then this exception will generate.
-     * @throws IOException In any situation where input/output operations are involved, and there is an error or failure in the operation.
-     */
+
 
     @DeleteMapping("/delete-comment/{commentId}")
     public ResponseEntity<Response> deleteComment (@PathVariable @Valid Integer commentId) throws GeneralException,
@@ -57,14 +45,7 @@ public class CommentController {
     }
 
 
-    /**
-     * This API are used to UpdateComment
-     * @param request passing request as an RequestBody argument.
-     * @param commentId passing commentId as an PathVariable argument.
-     * @return return response.
-     * @throws GeneralException If anything goes wrong then this exception will generate.
-     * @throws IOException In any situation where input/output operations are involved, and there is an error or failure in the operation.
-     */
+
     @PutMapping("/update-comment/{commentId}")
     public ResponseEntity<Response> updateComment (@RequestBody @Valid CommentDTO request, @PathVariable @Valid Integer commentId) throws GeneralException,
             IOException {
@@ -75,13 +56,7 @@ public class CommentController {
     }
 
 
-    /**
-     * This API are used to GetComment
-     * @param commentId passing commentId as an PathVariable argument.
-     * @return return response
-     * @throws GeneralException If anything goes wrong then this exception will generate.
-     * @throws IOException In any situation where input/output operations are involved, and there is an error or failure in the operation.
-     */
+
     @GetMapping("/get-comment/{commentId}")
     public ResponseEntity<Response> getComment (@PathVariable @Valid Integer commentId) throws GeneralException,
             IOException {

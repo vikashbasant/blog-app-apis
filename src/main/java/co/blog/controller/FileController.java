@@ -31,14 +31,7 @@ public class FileController {
     private String path;
 
 
-    /**
-     * This API are used to Upload the Image file
-     * @param image passing an image as an argument of Multipart
-     * @return Response Object
-     * @throws GeneralException If anything goes wrong then this exception will generate.
-     * @throws IOException In any situation where input/output operations are involved, and there is an error or
-     *      * failure in the operation.
-     */
+
     @PostMapping("/upload-image")
     public ResponseEntity<Response> fileUpload(@RequestParam("image") MultipartFile image) throws GeneralException, IOException {
         log.info("===: FileController:: Inside fileUpload Method :===");
@@ -48,13 +41,6 @@ public class FileController {
     }
 
 
-    /**
-     * This API are used to Delete the Image File
-     * @param imageName passing an imageName as argument
-     * @return Response Object
-     * @throws GeneralException If anything goes wrong then this exception will generate.
-     * @throws IOException In any situation where input/output operations are involved, and there is an error or * failure in the operation.
-     */
     @DeleteMapping("/delete-image/{imageName}")
     public ResponseEntity<Response> deleteImage (@PathVariable @Valid String imageName) throws GeneralException, IOException {
         log.info("===: FileController:: Inside deleteImage Method :===");
@@ -65,14 +51,7 @@ public class FileController {
     }
 
 
-    /**
-     * This API are used to Serve the image file
-     * @param imageName passing an argument as a PathVariable
-     * @param response return response as HttpServletResponse
-     * @throws GeneralException If anything goes wrong then this exception will generate.
-     * @throws IOException  In any situation where input/output operations are involved, and there is an error or
-     * failure in the operation.
-     */
+
     @GetMapping(value = "/profile/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public void downloadImage(@PathVariable("imageName") String imageName, HttpServletResponse response) throws GeneralException, IOException {
         log.info("===: FileController:: Inside downloadImage Method :===");

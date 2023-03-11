@@ -25,12 +25,7 @@ public class UserController {
     private BlogServiceFactory factory;
 
 
-    /**
-     * For Create User API Here @Valid Annotation used for Enable the Validation:
-     * @param request UserDTO
-     * @return UserResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
+
     @PostMapping("/create")
     public ResponseEntity<Response> createUser (@RequestBody @Valid UserDTO request) throws GeneralException, IOException {
         log.info("===: UserController:: Inside createUser Method :===");
@@ -39,12 +34,7 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    /**
-     * For UpdateUser API
-     * @param request UserDTO
-     * @return UserResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
+
     @PutMapping("/update/{userId}")
     public ResponseEntity<Response> updateUser (@RequestBody @Valid UserDTO request, @PathVariable @Valid Integer userId) throws GeneralException, IOException {
         log.info("===: UserController:: Inside updateUser Method :===");
@@ -53,12 +43,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * For Get Single User
-     * @param userId Pass The userId
-     * @return UserResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
+
     @GetMapping("/get-user/{userId}")
     public ResponseEntity<Response> getUser (@PathVariable @Valid Integer userId) throws GeneralException, IOException {
         log.info("===: UserController:: Inside getUser Method :===");
@@ -67,11 +52,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    /**
-     * For Get All User
-     * @return list of UserResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
+
     @GetMapping("/get-all-user")
     public ResponseEntity<Response> getAllUsers () throws GeneralException, IOException {
         log.info("===: UserController:: Inside getAllUsers Method :===");
@@ -82,12 +63,7 @@ public class UserController {
     }
 
 
-    /**
-     * @purpose For Delete User With userId
-     * @param uId
-     * @return UserResponseDTO
-     * @throws GeneralException If AnyThing goes wrong then gives the Exception
-     */
+
     /*---- Only Admin Can Delete The User ----*/
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete-user/{userId}")
