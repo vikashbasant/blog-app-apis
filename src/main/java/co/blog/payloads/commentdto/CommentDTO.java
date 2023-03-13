@@ -1,39 +1,31 @@
-package co.blog.entity;
+package co.blog.payloads.commentdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
-@Entity
-@Table(name = "comments")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Setter
-public class Comment implements Comparable<Comment>, Serializable {
+@Getter
+public class CommentDTO implements Comparable<CommentDTO>{
 
-    private static final long serialVersionUID = 7104462920542626419L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "commentId")
     private int commentId;
 
-    @Column(name = "commentContent")
+    @NotNull(message = "commentContent can't be Null")
+    @NotEmpty(message = "commentContent can't be Empty")
+    @Size(min = 3, max = 300, message = "commentContent minimum 3 & maximum 300 character are allowed")
     private String commentContent;
 
-    @ManyToOne
-    @JoinColumn(name = "postId")
-    private Post post;
+    private Integer postId;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+    private Integer userId;
 
     /**
      * Compares this object with the specified object for order.  Returns a
@@ -74,20 +66,20 @@ public class Comment implements Comparable<Comment>, Serializable {
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo (Comment o) {
+    public int compareTo (CommentDTO o) {
         return Integer.compare(o.getCommentId(), this.commentId);
     }
 
     @Override
     public boolean equals (Object o) {
         if (this == o) return true;
-        if (!(o instanceof Comment)) return false;
-        Comment comment = (Comment) o;
-        return getCommentId() == comment.getCommentId() && Objects.equals(getCommentContent(), comment.getCommentContent()) && Objects.equals(getPost(), comment.getPost()) && Objects.equals(getUser(), comment.getUser());
+        if (!(o instanceof CommentDTO)) return false;
+        CommentDTO that = (CommentDTO) o;
+        return getCommentId() == that.getCommentId() && Objects.equals(getCommentContent(), that.getCommentContent()) && Objects.equals(getPostId(), that.getPostId()) && Objects.equals(getUserId(), that.getUserId());
     }
 
     @Override
     public int hashCode () {
-        return Objects.hash(getCommentId(), getCommentContent(), getPost(), getUser());
+        return Objects.hash(getCommentId(), getCommentContent(), getPostId(), getUserId());
     }
 }

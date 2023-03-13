@@ -6,8 +6,8 @@ import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
-import co.blog.payloads.pDTO.PostResponse;
-import co.blog.payloads.pDTO.PostResponseDTO;
+import co.blog.payloads.pdto.PostResponse;
+import co.blog.payloads.pdto.PostResponseDTO;
 import co.blog.repository.CategoryRepo;
 import co.blog.repository.PostRepo;
 import co.blog.util.BlogService;
@@ -93,6 +93,7 @@ public class GetPostByCategoryId implements BlogService {
         postResponse.setTotalRecords(pagePost.getTotalElements());
         postResponse.setTotalPages(pagePost.getTotalPages());
         postResponse.setLastPage(pagePost.isLast());
+
         return postResponse;
 
     }

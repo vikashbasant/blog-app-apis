@@ -5,7 +5,7 @@ import co.blog.config.BlogAppConstants;
 import co.blog.entity.Category;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.cDTO.CategoryResponseDTO;
+import co.blog.payloads.cdto.CategoryResponseDTO;
 import co.blog.repository.CategoryRepo;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceType;
@@ -13,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -45,8 +43,8 @@ public class GetCategory implements BlogService {
         Integer categoryId = (Integer) t;
 
         /*----Fetch Category With CategoryId----*/
-        Optional<Category> category = Optional.ofNullable(cRepo.findById(categoryId).orElseThrow(() -> new GeneralException("Category Not " +
-                "Found With This CategoryId = " + categoryId)));
+        Category category = cRepo.findById(categoryId).orElseThrow(() -> new GeneralException("Category Not " +
+                "Found With This CategoryId = " + categoryId));
 
         /*----Convert Category into CategoryResponseDTO:----*/
         cResponseDTO = this.modelMapper.map(category, CategoryResponseDTO.class);
@@ -57,10 +55,6 @@ public class GetCategory implements BlogService {
         response.setMessage("Successfully Fetch The Category With CategoryId = " + categoryId);
         response.setData(cResponseDTO);
 
-
         return response;
-
-
-
     }
 }

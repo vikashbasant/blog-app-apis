@@ -1,6 +1,7 @@
-package co.blog.payloads.pDTO;
+package co.blog.payloads.pdto;
 
 import co.blog.config.BlogAppConstants;
+import co.blog.entity.Comment;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +12,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Set;
+import java.util.TreeSet;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,6 +41,5 @@ public class PostDTO {
     private Integer categoryId;
 
     private Integer userId;
-
 
 }

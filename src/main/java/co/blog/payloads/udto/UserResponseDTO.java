@@ -1,7 +1,8 @@
-package co.blog.payloads.uDTO;
+package co.blog.payloads.udto;
 
-import co.blog.payloads.rDTO.RoleDTO;
+import co.blog.payloads.rdto.RoleDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,12 +19,22 @@ import java.util.TreeSet;
 @Component
 public class UserResponseDTO {
     private int userId;
-    private String userName;
+    private String name;
     private String userEmail;
-    @JsonIgnore
+
     private String userPassword;
     private String userAbout;
 
     private Set<RoleDTO> roles = new TreeSet<>();
+
+    @JsonIgnore
+    public String getUserPassword() {
+        return this.userPassword;
+    }
+
+    @JsonProperty
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
 
 }

@@ -4,8 +4,8 @@ import co.blog.config.BlogAppConstants;
 import co.blog.entity.Category;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.cDTO.CategoryDTO;
-import co.blog.payloads.cDTO.CategoryResponseDTO;
+import co.blog.payloads.cdto.CategoryDTO;
+import co.blog.payloads.cdto.CategoryResponseDTO;
 import co.blog.repository.CategoryRepo;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceType;
@@ -13,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -47,17 +45,16 @@ public class UpdateCategory implements BlogService {
         Integer categoryId = (Integer) u;
 
         /*----First Find The Category With CategoryId----*/
-        Optional<Category> category = Optional.ofNullable(cRepo.findById(categoryId).orElseThrow(() -> new GeneralException(
-                "Category Not Found With CategoryId = " + cDTO.getCategoryId())));
+        Category category = cRepo.findById(categoryId).orElseThrow(() -> new GeneralException(
+                "Category Not Found With CategoryId = " + cDTO.getCategoryId()));
 
-        /*----Then Simply Update The User----*/
-        if (category.isPresent()) {
-            category.get().setCategoryTitle(cDTO.getCategoryTitle());
-            category.get().setCategoryDescription(cDTO.getCategoryDescription());
-        }
+        /*----Then Simply Update The category----*/
+        category.setCategoryTitle(cDTO.getCategoryTitle());
+        category.setCategoryDescription(cDTO.getCategoryDescription());
+
 
         /*----Then Simply Updated The Updated Category----*/
-        Category sCategory = cRepo.save(category.get());
+        Category sCategory = cRepo.save(category);
 
 
         /*----Convert cDTO to CategoryResponseDTO----*/

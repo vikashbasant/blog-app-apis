@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -15,7 +17,9 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @Table(name = "roles")
-public class Role  implements Comparable{
+public class Role  implements Comparable<Role>, Serializable {
+
+    private static final long serialVersionUID = 7104462920542626419L;
 
     @Id
     private int roleId;
@@ -60,12 +64,20 @@ public class Role  implements Comparable{
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo (Object o) {
-        if(this.roleId == ((Role)o).getRoleId())
-            return 0;
-        else if (this.roleId< ((Role)o).getRoleId())
-            return 1;
-        else
-            return -1;
+    public int compareTo (Role o) {
+        return Integer.compare(o.getRoleId(), this.roleId);
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+        Role role = (Role) o;
+        return getRoleId() == role.getRoleId() && Objects.equals(getRoleName(), role.getRoleName());
+    }
+
+    @Override
+    public int hashCode () {
+        return Objects.hash(getRoleId(), getRoleName());
     }
 }

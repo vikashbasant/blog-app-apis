@@ -33,7 +33,8 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
 
     /*----Handle The Custom HttpMessageNotReadable Exception----*/
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable (HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMessageNotReadable (
+            HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.info("===: ExceptionController:: Inside handleHttpMessageNotReadable Method :===");
         return ResponseEntity.ok().body(getResponse("HMNR - " + ex.getLocalizedMessage(), "400"));
     }

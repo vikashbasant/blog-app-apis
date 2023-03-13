@@ -5,8 +5,8 @@ import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
-import co.blog.payloads.pDTO.PostResponse;
-import co.blog.payloads.pDTO.PostResponseDTO;
+import co.blog.payloads.pdto.PostResponse;
+import co.blog.payloads.pdto.PostResponseDTO;
 import co.blog.repository.PostRepo;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceType;
@@ -51,22 +51,22 @@ public class SearchPost implements BlogService {
         String keyword = (String) t;
         paginationDTO = (PaginationDTO) u;
 
-        // Fetching all the details of paginationDtO object:
+        /*----Fetching all the details of paginationDtO object:----*/
         int pageNumber = paginationDTO.getPageNumber();
         int pageSize = paginationDTO.getPageSize();
         String sortBy = paginationDTO.getSortBy();
         String sortDir = paginationDTO.getSortDir();
 
-        // For Sorting:
+        /*----For Sorting:----*/
         Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
         /*----Create an Object of Pageable----*/
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
-        // Fetch the with respect to keyword and pageable:
+        /*----Fetch the with respect to keyword and pageable:----*/
         Page<Post> pagePost = pRepo.searchByTitle(keyword, pageable);
 
-        // Fetch the content of pagePost:
+        /*----Fetch the content of pagePost:----*/
         List<Post> posts = pagePost.getContent();
 
         /*----Now Iterate with listOfPost and convert PostResponseDTO----*/

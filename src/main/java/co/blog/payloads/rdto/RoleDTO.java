@@ -1,39 +1,11 @@
-package co.blog.entity;
+package co.blog.payloads.rdto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
-
-@Entity
-@Table(name = "comments")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class Comment implements Comparable<Comment>, Serializable {
-
-    private static final long serialVersionUID = 7104462920542626419L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "commentId")
-    private int commentId;
-
-    @Column(name = "commentContent")
-    private String commentContent;
-
-    @ManyToOne
-    @JoinColumn(name = "postId")
-    private Post post;
-
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+@Data
+public class RoleDTO implements Comparable<RoleDTO>{
+    private int roleId;
+    private String roleName;
 
     /**
      * Compares this object with the specified object for order.  Returns a
@@ -74,20 +46,8 @@ public class Comment implements Comparable<Comment>, Serializable {
      *                              from being compared to this object.
      */
     @Override
-    public int compareTo (Comment o) {
-        return Integer.compare(o.getCommentId(), this.commentId);
+    public int compareTo (RoleDTO o) {
+        return Integer.compare(o.getRoleId(), this.roleId);
     }
 
-    @Override
-    public boolean equals (Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Comment)) return false;
-        Comment comment = (Comment) o;
-        return getCommentId() == comment.getCommentId() && Objects.equals(getCommentContent(), comment.getCommentContent()) && Objects.equals(getPost(), comment.getPost()) && Objects.equals(getUser(), comment.getUser());
-    }
-
-    @Override
-    public int hashCode () {
-        return Objects.hash(getCommentId(), getCommentContent(), getPost(), getUser());
-    }
 }

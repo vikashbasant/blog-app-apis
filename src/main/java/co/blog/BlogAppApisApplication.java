@@ -7,13 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class BlogAppApisApplication implements CommandLineRunner {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ApplicationRunnerForRole applicationRunnerForRole;
@@ -30,7 +27,6 @@ public class BlogAppApisApplication implements CommandLineRunner {
 
     @Override
     public void run (String... args) throws Exception {
-        System.out.println(this.passwordEncoder.encode("Vikky@333"));
 
         this.applicationRunnerForRole.createRoles();
     }

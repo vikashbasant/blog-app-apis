@@ -5,8 +5,8 @@ import co.blog.entity.Post;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;
-import co.blog.payloads.pDTO.PostResponse;
-import co.blog.payloads.pDTO.PostResponseDTO;
+import co.blog.payloads.pdto.PostResponse;
+import co.blog.payloads.pdto.PostResponseDTO;
 import co.blog.repository.PostRepo;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceType;
@@ -53,7 +53,7 @@ public class GetAllPost implements BlogService {
         String sortBy = paginationDTO.getSortBy();
         String sortDir = paginationDTO.getSortDir();
 
-        // For Sorting:
+        /*----For Sorting:----*/
         Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
         /*----Create an Object of Pageable----*/
@@ -83,6 +83,7 @@ public class GetAllPost implements BlogService {
         postResponse.setTotalRecords(pagePost.getTotalElements());
         postResponse.setTotalPages(pagePost.getTotalPages());
         postResponse.setLastPage(pagePost.isLast());
+
         return postResponse;
     }
 }

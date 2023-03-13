@@ -1,9 +1,11 @@
-package co.blog.payloads.pDTO;
+package co.blog.payloads.pdto;
 
 
-import co.blog.payloads.cDTO.CategoryDTO;
-import co.blog.payloads.commentDTO.CommentDTO;
-import co.blog.payloads.uDTO.UserResponseDTO;
+import co.blog.entity.Comment;
+import co.blog.payloads.cdto.CategoryDTO;
+import co.blog.payloads.commentdto.CommentDTO;
+import co.blog.payloads.commentdto.CommentResponseDTO;
+import co.blog.payloads.udto.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

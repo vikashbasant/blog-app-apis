@@ -31,9 +31,14 @@ public class FileController {
     private String path;
 
 
-
+    /**
+     * This API are used to ImageUpload.
+     * @param image passing image as an argument of RequestParam.
+     * @return return response.
+     * @throws GeneralException If anything goes wrong then this GeneralException will generate.
+     */
     @PostMapping("/upload-image")
-    public ResponseEntity<Response> fileUpload(@RequestParam("image") MultipartFile image) throws GeneralException, IOException {
+    public ResponseEntity<Response> fileUpload(@RequestParam("image") MultipartFile image) throws GeneralException {
         log.info("===: FileController:: Inside fileUpload Method :===");
         BlogService service = factory.getService(BlogServiceType.UPLOAD_IMAGE);
         Response response = service.executeService(path, image);
@@ -41,8 +46,14 @@ public class FileController {
     }
 
 
+    /**
+     * This API are used to deleteImage.
+     * @param imageName passing imageName as an argument of PathVariable.
+     * @return return response.
+     * @throws GeneralException If anything goes wrong then this GeneralException will generate.
+     */
     @DeleteMapping("/delete-image/{imageName}")
-    public ResponseEntity<Response> deleteImage (@PathVariable @Valid String imageName) throws GeneralException, IOException {
+    public ResponseEntity<Response> deleteImage (@PathVariable @Valid String imageName) throws GeneralException {
         log.info("===: FileController:: Inside deleteImage Method :===");
         BlogService service = factory.getService(BlogServiceType.DELETE_IMAGE);
         Response response = service.executeService(path, imageName);
@@ -51,7 +62,13 @@ public class FileController {
     }
 
 
-
+    /**
+     * This API are used to downloadImage.
+     * @param imageName passing imageName as an argument of PathVariable.
+     * @param response return HttpServletResponse.
+     * @throws GeneralException If anything goes wrong then this GeneralException will generate.
+     * @throws IOException something wrong with your input or output then this IOException will generate.
+     */
     @GetMapping(value = "/profile/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public void downloadImage(@PathVariable("imageName") String imageName, HttpServletResponse response) throws GeneralException, IOException {
         log.info("===: FileController:: Inside downloadImage Method :===");

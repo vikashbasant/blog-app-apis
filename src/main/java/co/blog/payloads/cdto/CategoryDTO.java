@@ -1,4 +1,4 @@
-package co.blog.payloads.cDTO;
+package co.blog.payloads.cdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

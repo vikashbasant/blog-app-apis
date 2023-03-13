@@ -4,7 +4,7 @@ import co.blog.config.BlogAppConstants;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.uDTO.UserResponseDTO;
+import co.blog.payloads.udto.UserResponseDTO;
 import co.blog.repository.UserRepo;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceType;
@@ -12,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -45,8 +43,8 @@ public class DeleteUser implements BlogService {
         Integer userId = (Integer) t;
 
         /*----Before delete the User, Fetch the User:----*/
-        Optional<User> byId = Optional.ofNullable(userRepo.findById(userId).orElseThrow(() -> new GeneralException("User Not " +
-                "Found With UserId = " + userId)));
+        User byId = userRepo.findById(userId).orElseThrow(() -> new GeneralException("User Not " +
+                "Found With UserId = " + userId));
 
         /*----Now Simply Delete the User with userId:----*/
         userRepo.deleteById(userId);

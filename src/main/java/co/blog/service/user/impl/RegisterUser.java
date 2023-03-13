@@ -6,8 +6,8 @@ import co.blog.entity.Role;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.uDTO.UserDTO;
-import co.blog.payloads.uDTO.UserResponseDTO;
+import co.blog.payloads.udto.UserDTO;
+import co.blog.payloads.udto.UserResponseDTO;
 import co.blog.repository.RoleRepo;
 import co.blog.repository.UserRepo;
 import co.blog.util.BlogService;
@@ -17,8 +17,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 
 @Service
@@ -50,7 +48,7 @@ public class RegisterUser implements BlogService {
     }
 
     @Override
-    public <T, U> Response executeService (T t, U u) throws GeneralException, IOException {
+    public <T, U> Response executeService (T t, U u) throws GeneralException {
 
         log.info("===: RegisterUser:: Inside executeService Method :===");
 

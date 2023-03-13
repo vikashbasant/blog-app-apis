@@ -6,8 +6,8 @@ import co.blog.entity.Post;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.commentDTO.CommentDTO;
-import co.blog.payloads.commentDTO.CommentResponseDTO;
+import co.blog.payloads.commentdto.CommentDTO;
+import co.blog.payloads.commentdto.CommentResponseDTO;
 import co.blog.repository.CommentRepo;
 import co.blog.repository.PostRepo;
 import co.blog.repository.UserRepo;
@@ -17,8 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 @Slf4j
@@ -48,7 +46,7 @@ public class CreateComment implements BlogService {
     }
 
     @Override
-    public <T, U> Response executeService (T t, U u) throws GeneralException, IOException {
+    public <T, U> Response executeService (T t, U u) throws GeneralException {
 
         log.info("===: CreateComment:: Inside executeService Method :===");
 

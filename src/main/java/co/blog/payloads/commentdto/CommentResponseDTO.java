@@ -1,7 +1,7 @@
-package co.blog.payloads.commentDTO;
+package co.blog.payloads.commentdto;
 
-import co.blog.payloads.pDTO.PostDTO;
-import co.blog.payloads.uDTO.UserDTO;
+import co.blog.payloads.pdto.PostDTO;
+import co.blog.payloads.udto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

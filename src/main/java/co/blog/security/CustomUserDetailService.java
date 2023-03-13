@@ -25,6 +25,9 @@ public class CustomUserDetailService implements UserDetailsService {
 
         log.info("===: CustomUserDetailService:: Inside loadUserByUsername Method :===");
 
+
+        log.info("userName = " + userName);
+
         /*----loading user from database by username----*/
         User user = this.uRepo.findByUserEmail(userName).orElseThrow(() -> new GeneralException("User not " +
                 "found With userEmail = " + userName));
