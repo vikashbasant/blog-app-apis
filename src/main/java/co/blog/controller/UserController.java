@@ -73,6 +73,7 @@ public class UserController {
      * @return return response.
      * @throws GeneralException If anything goes wrong then this GeneralException will generate.
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get-all-user")
     public ResponseEntity<Response> getAllUsers () throws GeneralException {
         log.info("===: UserController:: Inside getAllUsers Method :===");
