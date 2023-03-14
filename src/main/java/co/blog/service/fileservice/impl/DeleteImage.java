@@ -1,4 +1,4 @@
-package co.blog.service.fileService.impl;
+package co.blog.service.fileservice.impl;
 
 import co.blog.config.BlogAppConstants;
 import co.blog.exception.GeneralException;

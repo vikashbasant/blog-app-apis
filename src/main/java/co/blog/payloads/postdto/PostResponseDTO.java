@@ -1,11 +1,9 @@
-package co.blog.payloads.pdto;
+package co.blog.payloads.postdto;
 
 
-import co.blog.entity.Comment;
-import co.blog.payloads.cdto.CategoryDTO;
+import co.blog.payloads.categorydto.CategoryDTO;
 import co.blog.payloads.commentdto.CommentDTO;
-import co.blog.payloads.commentdto.CommentResponseDTO;
-import co.blog.payloads.udto.UserResponseDTO;
+import co.blog.payloads.userdto.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +11,8 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -39,7 +37,7 @@ public class PostResponseDTO {
 
 
     // When ever we want to fetch the post then comment will automatically Fetch:
-    private Set<CommentDTO> comments = new TreeSet<>();
+    private Set<CommentDTO> comments = new HashSet<>();
 
 
 }

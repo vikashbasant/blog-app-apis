@@ -19,6 +19,12 @@ public class CustomUserDetailService implements UserDetailsService {
     @Autowired
     private UserRepo uRepo;
 
+    /**
+     * This API are used loadUserByUsername.
+     * @param userName the username identifying the user whose data is required.
+     * @return return UserDetails.
+     * @throws UsernameNotFoundException If anything goes wrong then this UsernameNotFoundException will generate.
+     */
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername (String userName) throws UsernameNotFoundException {

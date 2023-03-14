@@ -2,7 +2,7 @@ package co.blog.controller;
 
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.udto.UserDTO;
+import co.blog.payloads.userdto.UserDTO;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceFactory;
 import co.blog.util.BlogServiceType;

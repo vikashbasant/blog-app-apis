@@ -1,6 +1,8 @@
-package co.blog.payloads.udto;
+package co.blog.payloads.userdto;
 
-import co.blog.payloads.rdto.RoleDTO;
+import co.blog.payloads.commentdto.CommentDTO;
+import co.blog.payloads.postdto.PostDTOForUser;
+import co.blog.payloads.roledto.RoleDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -9,8 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +27,11 @@ public class UserResponseDTO {
     private String userPassword;
     private String userAbout;
 
-    private Set<RoleDTO> roles = new TreeSet<>();
+    private Set<RoleDTO> roles = new HashSet<>();
+
+    private Set<CommentDTO> comments = new HashSet<>();
+
+    private Set<PostDTOForUser> posts = new HashSet<>();
 
     @JsonIgnore
     public String getUserPassword() {

@@ -18,6 +18,10 @@ public class ApplicationRunnerForRole {
     @Autowired
     private RoleRepo rRepo;
 
+    /**
+     * Purpose of the API, When you run the application every time createRoles Method for creating role of user.
+     * @throws Exception If anything goes wrong then this Exception will generate.
+     */
     public void createRoles() throws Exception {
 
         log.info("===: ApplicationRunnerForRole:: Inside createRoles Method :===");

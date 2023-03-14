@@ -1,4 +1,4 @@
-package co.blog.payloads.pdto;
+package co.blog.payloads.postdto;
 
 import co.blog.payloads.Response;
 import lombok.AllArgsConstructor;

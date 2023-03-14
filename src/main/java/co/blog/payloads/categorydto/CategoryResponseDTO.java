@@ -1,4 +1,4 @@
-package co.blog.payloads.cdto;
+package co.blog.payloads.categorydto;
 
 
 import lombok.AllArgsConstructor;

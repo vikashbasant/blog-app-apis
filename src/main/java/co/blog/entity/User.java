@@ -10,10 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -23,7 +20,7 @@ import java.util.stream.Collectors;
 @Getter
 @Table(name = "users", uniqueConstraints=
 @UniqueConstraint(columnNames={"userId", "userEmail"}))
-public class User implements UserDetails, Comparable<User> {
+public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userId")
@@ -42,29 +39,22 @@ public class User implements UserDetails, Comparable<User> {
     @Column(name = "userAbout")
     private String userAbout;
 
-    @Transient
-    private Set<Post> posts = new TreeSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
+    private Set<Post> posts = new HashSet<>();
 
-    @Transient
-    private Set<Comment> comments = new TreeSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch =  FetchType.LAZY)
+    private Set<Comment> comments = new HashSet<>();
 
 
-    @Transient
+    @ManyToMany(cascade = CascadeType.ALL, fetch =  FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId", referencedColumnName = "roleId")
     )
-    private Set<Role> roles = new TreeSet<>();
+    private Set<Role> roles = new HashSet<>();
 
 
-    public String getName () {
-        return this.name;
-    }
-
-    public void setName (String name) {
-        this.name = name;
-    }
 
     /**
      * Returns the authorities granted to the user. Cannot return <code>null</code>.
@@ -147,60 +137,4 @@ public class User implements UserDetails, Comparable<User> {
         return true;
     }
 
-    /**
-     * Compares this object with the specified object for order.  Returns a
-     * negative integer, zero, or a positive integer as this object is less
-     * than, equal to, or greater than the specified object.
-     *
-     * <p>The implementor must ensure <tt>sgn(x.compareTo(y)) ==
-     * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>.  (This
-     * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
-     * <tt>y.compareTo(x)</tt> throws an exception.)
-     *
-     * <p>The implementor must also ensure that the relation is transitive:
-     * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
-     * <tt>x.compareTo(z)&gt;0</tt>.
-     *
-     * <p>Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
-     * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for
-     * all <tt>z</tt>.
-     *
-     * <p>It is strongly recommended, but <i>not</i> strictly required that
-     * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>.  Generally speaking, any
-     * class that implements the <tt>Comparable</tt> interface and violates
-     * this condition should clearly indicate this fact.  The recommended
-     * language is "Note: this class has a natural ordering that is
-     * inconsistent with equals."
-     *
-     * <p>In the foregoing description, the notation
-     * <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical
-     * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
-     * <tt>0</tt>, or <tt>1</tt> according to whether the value of
-     * <i>expression</i> is negative, zero or positive.
-     *
-     * @param o the object to be compared.
-     * @return a negative integer, zero, or a positive integer as this object
-     * is less than, equal to, or greater than the specified object.
-     * @throws NullPointerException if the specified object is null
-     * @throws ClassCastException   if the specified object's type prevents it
-     *                              from being compared to this object.
-     */
-    @Override
-    public int compareTo (User o) {
-        return Integer.compare(o.getUserId(), this.userId);
-    }
-
-    @Override
-    public boolean equals (Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return getUserId() == user.getUserId() && Objects.equals(getName(), user.getName()) && Objects.equals(getUserEmail(),
-                user.getUserEmail()) && Objects.equals(getUserPassword(), user.getUserPassword()) && Objects.equals(getUserAbout(), user.getUserAbout()) && Objects.equals(getPosts(), user.getPosts()) && Objects.equals(getComments(), user.getComments()) && Objects.equals(getRoles(), user.getRoles());
-    }
-
-    @Override
-    public int hashCode () {
-        return Objects.hash(getUserId(), getName(), getUserEmail(), getUserPassword(), getUserAbout(), getPosts(), getComments(), getRoles());
-    }
 }

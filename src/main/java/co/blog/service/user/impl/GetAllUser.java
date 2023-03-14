@@ -4,7 +4,7 @@ import co.blog.config.BlogAppConstants;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
-import co.blog.payloads.udto.UserResponseDTO;
+import co.blog.payloads.userdto.UserResponseDTO;
 import co.blog.repository.UserRepo;
 import co.blog.util.BlogService;
 import co.blog.util.BlogServiceType;
