@@ -84,4 +84,17 @@ public class CommentController {
         Response response = service.executeService(commentId, "");
         return ResponseEntity.ok(response);
     }
+
+    /**
+     * This API are used to getAllComment.
+     * @return return response.
+     * @throws GeneralException If anything goes wrong then this GeneralException will generate.
+     */
+    @GetMapping("/get-all-comment")
+    public ResponseEntity<Response> getAllComment() throws GeneralException {
+        log.info("===: CommentController:: Inside getComment Method :===");
+        BlogService service = factory.getService(BlogServiceType.GET_ALL_COMMENT);
+        Response response = service.executeService("", "");
+        return ResponseEntity.ok(response);
+    }
 }
