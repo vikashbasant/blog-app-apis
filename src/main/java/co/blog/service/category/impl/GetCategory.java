@@ -1,7 +1,7 @@
 package co.blog.service.category.impl;
 
 
-import co.blog.config.BlogAppConstants;
+import co.blog.constants.BlogAppConstants;
 import co.blog.entity.Category;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;

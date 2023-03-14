@@ -1,4 +1,4 @@
-package co.blog.config;
+package co.blog.constants;
 
 import springfox.documentation.service.VendorExtension;
 

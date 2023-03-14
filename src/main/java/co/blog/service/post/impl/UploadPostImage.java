@@ -1,6 +1,6 @@
 package co.blog.service.post.impl;
 
-import co.blog.config.BlogAppConstants;
+import co.blog.constants.BlogAppConstants;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.Response;
 import co.blog.util.BlogService;

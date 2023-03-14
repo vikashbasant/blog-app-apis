@@ -1,6 +1,6 @@
 package co.blog.controller;
 
-import co.blog.config.BlogAppConstants;
+import co.blog.constants.BlogAppConstants;
 import co.blog.exception.GeneralException;
 import co.blog.payloads.PaginationDTO;
 import co.blog.payloads.Response;

@@ -1,6 +1,6 @@
 package co.blog.payloads.postdto;
 
-import co.blog.config.BlogAppConstants;
+import co.blog.constants.BlogAppConstants;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package co.blog.service.user.impl;
 
-import co.blog.config.BlogAppConstants;
-import co.blog.config.RoleConstants;
+import co.blog.constants.BlogAppConstants;
+import co.blog.constants.RoleConstants;
 import co.blog.entity.Role;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;

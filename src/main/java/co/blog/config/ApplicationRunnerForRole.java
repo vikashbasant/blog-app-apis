@@ -1,5 +1,6 @@
 package co.blog.config;
 
+import co.blog.constants.RoleConstants;
 import co.blog.entity.Role;
 import co.blog.repository.RoleRepo;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import static co.blog.config.RoleConstants.ADMIN_USER_NAME;
+import static co.blog.constants.RoleConstants.ADMIN_USER_NAME;
 
 @Component
 @Slf4j

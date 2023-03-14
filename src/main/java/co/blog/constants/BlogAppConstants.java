@@ -1,4 +1,4 @@
-package co.blog.config;
+package co.blog.constants;
 
 public class BlogAppConstants {
 

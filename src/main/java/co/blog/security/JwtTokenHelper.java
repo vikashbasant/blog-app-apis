@@ -1,6 +1,6 @@
 package co.blog.security;
 
-import co.blog.config.JwtSecurityConstants;
+import co.blog.constants.JwtSecurityConstants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

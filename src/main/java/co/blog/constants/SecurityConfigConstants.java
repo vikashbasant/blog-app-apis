@@ -1,4 +1,4 @@
-package co.blog.config;
+package co.blog.constants;
 
 public class SecurityConfigConstants {
     public static final String[] PUBLIC_URL = {

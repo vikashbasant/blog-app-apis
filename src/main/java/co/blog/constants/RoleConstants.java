@@ -1,4 +1,4 @@
-package co.blog.config;
+package co.blog.constants;
 
 public class RoleConstants {
     public static final Integer ADMIN_USER = 501;

@@ -1,5 +1,6 @@
 package co.blog.config;
 
+import co.blog.constants.SecurityConfigConstants;
 import co.blog.security.CustomUserDetailService;
 import co.blog.security.JwtAuthenticationEntryPoint;
 import co.blog.security.JwtAuthenticationFilter;
