@@ -3,6 +3,7 @@ package co.blog.payloads.postdto;
 
 import co.blog.payloads.categorydto.CategoryDTO;
 import co.blog.payloads.commentdto.CommentDTO;
+import co.blog.payloads.userdto.UserDTOForPost;
 import co.blog.payloads.userdto.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,9 +32,9 @@ public class PostResponseDTO {
 
     private Date addedDate;
 
-    private CategoryDTO category;
+    private UserDTOForPost user;
 
-    private UserResponseDTO user;
+    private CategoryDTO category;
 
 
     // When ever we want to fetch the post then comment will automatically Fetch:

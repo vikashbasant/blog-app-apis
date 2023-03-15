@@ -55,7 +55,7 @@ public class CreateCategory implements BlogService {
         /*----Simply Return The Response----*/
         response.setStatus(BlogAppConstants.STATUS);
         response.setStatusCode(BlogAppConstants.STATUS_CODE);
-        response.setMessage("User Created Successfully");
+        response.setMessage("Category Created Successfully");
         response.setData(cResponseDTO);
 
         return response;
