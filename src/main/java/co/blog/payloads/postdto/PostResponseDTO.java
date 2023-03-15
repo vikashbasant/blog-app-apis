@@ -4,7 +4,6 @@ package co.blog.payloads.postdto;
 import co.blog.payloads.categorydto.CategoryDTO;
 import co.blog.payloads.commentdto.CommentDTO;
 import co.blog.payloads.userdto.UserDTOForPost;
-import co.blog.payloads.userdto.UserResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
