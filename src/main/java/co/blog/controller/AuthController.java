@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/v1/auth/")
+@RequestMapping(value = "/auth/")
 @Slf4j
 public class AuthController {
 

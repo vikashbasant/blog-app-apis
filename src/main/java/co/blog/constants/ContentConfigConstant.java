@@ -7,4 +7,6 @@ public class ContentConfigConstant {
 
     public static final String MEDIA_TYPE_XML_EXTENSION = "xml";
 
+    public static final String MEDIA_TYPE_JPEG_EXTENSION = "jpeg";
+
 }
