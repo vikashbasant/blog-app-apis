@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class CategoryController {
      * @throws GeneralException If anything goes wrong then this GeneralException will generate.
      */
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Response> createCategory (@RequestBody @Valid CategoryDTO request) throws GeneralException {
         log.info("===: CategoryController:: Inside createCategory Method :===");
         BlogService service = factory.getService(BlogServiceType.CREATE_CATEGORY);
@@ -46,6 +48,7 @@ public class CategoryController {
      * @throws GeneralException If anything goes wrong then this GeneralException will generate.
      */
     @PutMapping("/update/{categoryId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Response> updateCategory (@RequestBody @Valid CategoryDTO request, @PathVariable @Valid Integer categoryId) throws GeneralException {
         log.info("===: CategoryController:: Inside updateCategory Method :===");
         BlogService service = factory.getService(BlogServiceType.UPDATE_CATEGORY);
@@ -90,6 +93,7 @@ public class CategoryController {
      * @throws GeneralException If anything goes wrong then this GeneralException will generate.
      */
     @DeleteMapping("/delete-category/{categoryId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Response> deleteCategory (@PathVariable("categoryId") @Valid Integer cId) throws GeneralException {
         log.info("===: CategoryController:: Inside deleteCategory Method :===");
         BlogService service = factory.getService(BlogServiceType.DELETE_CATEGORY);
