@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -80,6 +81,7 @@ public class PostController {
      * @return return response.
      * @throws GeneralException If anything goes wrong then this GeneralException will generate.
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get-all-post")
     public ResponseEntity<Response> getAllPosts(
             @RequestParam(value = "pageNumber", defaultValue = BlogAppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
