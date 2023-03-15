@@ -42,7 +42,7 @@ public class UserDTO {
     @Size(max = 500, message = "About maximum 500 character are allowed")
     private String userAbout;
 
-    private int userRoleId = RoleConstants.NORMAL_USER;
+    private String userRole = RoleConstants.NORMAL_USER_NAME;
 
 
     @JsonIgnore

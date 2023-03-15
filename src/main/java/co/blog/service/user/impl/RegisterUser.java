@@ -1,6 +1,7 @@
 package co.blog.service.user.impl;
 
 import co.blog.constants.BlogAppConstants;
+import co.blog.constants.RoleConstants;
 import co.blog.entity.Role;
 import co.blog.entity.User;
 import co.blog.exception.GeneralException;
@@ -60,7 +61,9 @@ public class RegisterUser implements BlogService {
 
 
         // For Roles:
-        int userRoleId = uDTO.getUserRoleId();
+        String userRole = uDTO.getUserRole();
+        Integer userRoleId = userRole.equalsIgnoreCase(RoleConstants.ADMIN_USER_NAME) ? RoleConstants.ADMIN_USER :
+                RoleConstants.NORMAL_USER;
         /*----If Any One Register through Register API, Then we can assign the NORMAL User----*/
         Role role = this.rRepo.findById(userRoleId).orElseThrow(() -> new GeneralException("Role Not " +
                 "Found With RoleId = " + userRoleId));
