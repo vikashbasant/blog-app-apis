@@ -1,5 +1,6 @@
 package co.blog.payloads.userdto;
 
+import co.blog.constants.RoleConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,8 @@ public class UserDTO {
     @NotEmpty(message = "About can't be Empty")
     @Size(max = 500, message = "About maximum 500 character are allowed")
     private String userAbout;
+
+    private int userRoleId = RoleConstants.NORMAL_USER;
 
 
     @JsonIgnore

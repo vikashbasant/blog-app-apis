@@ -59,10 +59,12 @@ public class RegisterUser implements BlogService {
         /*---- Now We have Encoded The Password ----*/
         user.setUserPassword(this.passwordEncoder.encode(user.getUserPassword()));
 
+
         // For Roles:
+        int userRoleId = uDTO.getUserRoleId();
         /*----If Any One Register through Register API, Then we can assign the NORMAL User----*/
-        Role role = this.rRepo.findById(RoleConstants.NORMAL_USER).orElseThrow(() -> new GeneralException("Role Not " +
-                "Found With RoleId = " + RoleConstants.NORMAL_USER));
+        Role role = this.rRepo.findById(userRoleId).orElseThrow(() -> new GeneralException("Role Not " +
+                "Found With RoleId = " + userRoleId));
 
         /*----Now Simply Add the Role into User----*/
         user.getRoles().add(role);;
