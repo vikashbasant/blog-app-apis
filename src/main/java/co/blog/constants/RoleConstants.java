@@ -1,6 +1,13 @@
 package co.blog.constants;
 
 public class RoleConstants {
+
+    /*----Adding private constructor to hide the implicit public one ----*/
+    private RoleConstants() {
+
+    }
+
+
     public static final Integer ADMIN_USER = 501;
     public static final Integer NORMAL_USER = 502;
 

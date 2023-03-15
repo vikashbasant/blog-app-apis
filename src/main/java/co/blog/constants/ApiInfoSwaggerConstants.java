@@ -16,9 +16,10 @@ public class ApiInfoSwaggerConstants {
     public static final String SECURITY_REFERENCE = "JWT";
 
 
-    public static final String TITLE = "Blogging Backend Application";
-    public static final String DESCRIPTION = "This is Blogging Backend Application which developed using " +
-            "Spring Boot & Developed By Vikash Kumar Basant";
+    public static final String TITLE = "Backend Spring Boot Project Blog Application";
+    public static final String DESCRIPTION = "This project is a simple blogging platform built with Spring Boot . It " +
+            "uses Spring Security for authentication and authorization, Spring Data JPA for data access, and Spring " +
+            "Data REST for exposing a REST API. The database used in MySQL & Developed By Vikash Kumar Basant";
     public static final String VERSION = "v1";
     public static final String TERMS_OF_SERVICE_URL = "Terms Of Service";
     public static final String NAME = "Vikash Kumar Basant";
