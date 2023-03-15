@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -91,6 +92,7 @@ public class CommentController {
      * @throws GeneralException If anything goes wrong then this GeneralException will generate.
      */
     @GetMapping("/get-all-comment")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Response> getAllComment() throws GeneralException {
         log.info("===: CommentController:: Inside getComment Method :===");
         BlogService service = factory.getService(BlogServiceType.GET_ALL_COMMENT);
