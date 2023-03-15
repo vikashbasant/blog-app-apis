@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -31,6 +32,7 @@ public class UserController {
      * @throws GeneralException If anything goes wrong then this GeneralException will generate.
      */
     @PostMapping("/create")
+    @ApiIgnore
     public ResponseEntity<Response> createUser (@RequestBody @Valid UserDTO request) throws GeneralException {
         log.info("===: UserController:: Inside createUser Method :===");
         BlogService service = factory.getService(BlogServiceType.CREATE_USER);
