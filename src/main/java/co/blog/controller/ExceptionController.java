@@ -81,28 +81,28 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
 
     /*----Handle The Custom SQLException Exception.----*/
     @ExceptionHandler(SQLException.class)
-    public ResponseEntity<Object> handleSQLException (final SQLException ex, final WebRequest request) {
+    public ResponseEntity<Object> handleSQLException (final SQLException ex) {
         log.info("===: ExceptionController:: Inside handleSQLException Method :===");
         return ResponseEntity.ok().body(getResponse(ex.getMessage(), "SQL"));
     }
 
     /*----Handle The Custom IllegalArgumentException Exception.----*/
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Object> handleIllegalArgumentException (final IllegalArgumentException ex, final WebRequest request) {
+    public ResponseEntity<Object> handleIllegalArgumentException (final IllegalArgumentException ex) {
         log.info("===: ExceptionController:: Inside handleIllegalArgumentException Method :===");
         return ResponseEntity.ok().body(getResponse(ex.getMessage(), "IAE"));
     }
 
     /*----Handle The Custom IOException Exception.----*/
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<Object> handleIOException (final IOException ex, final WebRequest request) {
+    public ResponseEntity<Object> handleIOException (final IOException ex) {
         log.info("===: ExceptionController:: Inside handleIOException Method :===");
         return ResponseEntity.ok().body(getResponse(ex.getMessage(), "IOE"));
     }
 
     /*----Handle The Custom Exception.----*/
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleAllException (final Exception ex, final WebRequest request) {
+    public ResponseEntity<Object> handleAllException (final Exception ex) {
         log.info("===: ExceptionController:: Inside handleAllException Method :===");
         ex.printStackTrace();
         return ResponseEntity.ok().body(getResponse(ex.getMessage(), "500"));
@@ -111,7 +111,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
 
     /*----- Handle The Custom ExpiredJwtException----*/
     @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<Object> handleExpiredJwtException(final Exception ex, final WebRequest request) {
+    public ResponseEntity<Object> handleExpiredJwtException(final Exception ex) {
         log.info("===: ExceptionController:: Inside handleExpiredJwtException Method :===");
 
         return ResponseEntity.ok().body(getResponse(ex.getMessage(), "401"));
@@ -120,7 +120,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
 
     /*----- Handle The Custom MalformedJwtException----*/
     @ExceptionHandler(MalformedJwtException.class)
-    public ResponseEntity<Object> handleMalformedJwtException(final Exception ex, final WebRequest request) {
+    public ResponseEntity<Object> handleMalformedJwtException(final Exception ex) {
         log.info("===: ExceptionController:: Inside handleMalformedJwtException Method :===");
         return ResponseEntity.ok().body(getResponse(ex.getMessage(), "500"));
     }
@@ -128,7 +128,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
 
     /*----- Handle The Custom MalformedJwtException----*/
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<Object> handleBadCredentialsException(final Exception ex, final WebRequest request) {
+    public ResponseEntity<Object> handleBadCredentialsException(final Exception ex) {
         log.info("===: ExceptionController:: Inside handleBadCredentialsException Method :===");
         return ResponseEntity.ok().body(getResponse(ex.getMessage(), "401"));
     }

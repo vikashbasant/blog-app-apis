@@ -1,7 +1,8 @@
-package co.blog.config;
+package co.blog.helper;
 
 import co.blog.constants.RoleConstants;
 import co.blog.entity.Role;
+import co.blog.exception.GeneralException;
 import co.blog.repository.RoleRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class ApplicationRunnerForRole {
             /*----Now Simply Save The List of RoleList*/
             this.rRepo.saveAll(roleList);
         } catch (Exception e) {
-            throw new Exception(e);
+            throw new GeneralException("Some Wrong while Adding Role into DB.");
         }
     }
 
