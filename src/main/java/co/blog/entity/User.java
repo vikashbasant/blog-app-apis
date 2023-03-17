@@ -32,7 +32,7 @@ public class User implements UserDetails{
     private String name;
 
 
-    @Column(name = "userEmail", nullable = false, length = 100, unique = true)
+    @Column(name = "userEmail", nullable = false, length = 100, unique = true, columnDefinition = "Please Enter Unique Email Id")
     private String userEmail;
 
     @Column(name = "userPassword", nullable = false, length = 15)

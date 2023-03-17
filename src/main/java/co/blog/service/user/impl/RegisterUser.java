@@ -15,8 +15,11 @@ import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
 
 
 @Service
@@ -71,9 +74,15 @@ public class RegisterUser implements BlogService {
         /*----Now Simply Add the Role into User----*/
         user.getRoles().add(role);;
 
-
-        /*---- Now Simply Save the User----*/
-        User sUser = this.uRepo.save(user);
+        User sUser = null;
+        try {
+            /*---- Now Simply Save the User----*/
+            sUser = this.uRepo.save(user);
+        } catch (Exception e) {
+            if (e instanceof DataIntegrityViolationException) {
+                throw new DataIntegrityViolationException("Please Enter Unique EmailId");
+            }
+        }
 
 
         /*----Convert User to UserResponseDTO:----*/

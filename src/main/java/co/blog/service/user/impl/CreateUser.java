@@ -15,6 +15,7 @@ import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -70,8 +71,15 @@ public class CreateUser implements BlogService {
         /*----Now Simply Add the Role into User----*/
         user.getRoles().add(role);;
 
-        /*----Save User into DB:----*/
-        User sUser = userRepo.save(user);
+        User sUser = null;
+        try {
+            /*---- Now Simply Save the User----*/
+            sUser = this.userRepo.save(user);
+        } catch (Exception e) {
+            if (e instanceof DataIntegrityViolationException) {
+                throw new DataIntegrityViolationException("Please Enter Unique EmailId");
+            }
+        }
 
         /*----Convert User to UserResponseDTO:----*/
         uResponseDTO = this.userToUserResponseDTO(sUser);

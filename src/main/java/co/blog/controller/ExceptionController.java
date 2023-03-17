@@ -5,7 +5,9 @@ import co.blog.payloads.Response;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.MethodParameter;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpStatus;
@@ -59,6 +61,15 @@ public class ExceptionController extends ResponseEntityExceptionHandler implemen
     protected ResponseEntity<Object> handleServletRequestBindingException (ServletRequestBindingException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.info("===: ExceptionController:: Inside handleServletRequestBindingException Method :===");
         return ResponseEntity.ok().body(getResponse("SRBE - " + ex.getLocalizedMessage(), "400"));
+    }
+
+    /*----Handle The Custom ConstraintViolationException Exception.----*/
+    @ExceptionHandler(value = DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException (Exception ex) {
+
+        log.info("===: ExceptionController:: Inside handleDataIntegrityViolationException Method :===");
+        String message = ex.getMessage();
+        return new ResponseEntity<>(getResponse(message, "BLOGS_500"), HttpStatus.CONFLICT);
     }
 
     /*----Handle The Custom RuntimeException Exception.----*/
