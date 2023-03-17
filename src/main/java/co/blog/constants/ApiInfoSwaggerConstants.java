@@ -17,9 +17,9 @@ public class ApiInfoSwaggerConstants {
 
 
     public static final String TITLE = "Backend Spring Boot Project Blog Application";
-    public static final String DESCRIPTION = "This project is a simple blogging platform built with Spring Boot . It " +
-            "uses Spring Security for authentication and authorization, Spring Data JPA for data access, and Spring " +
-            "Data REST for exposing a REST API. The database used in MySQL & Developed By Vikash Kumar Basant";
+    public static final String DESCRIPTION = "Building Real Time REST API`s for Blogging Application built with Core Java(OOp's, package, exception, Lambda, \n" +
+            "    stream api etc), Spring Framework(Spring Core, Spring Security, JWT, Spring Data JPA\n" +
+            "    (Hibernate) and MySQL Database, IDE Intellij Idea & Developed By Vikash Kumar Basant";
     public static final String VERSION = "v1";
     public static final String TERMS_OF_SERVICE_URL = "Terms Of Service";
     public static final String NAME = "Vikash Kumar Basant";
