@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -44,6 +45,8 @@ public class DeleteImage implements BlogService {
         if (f.exists()) {
             /*----If filePath is present then simply delete it.----*/
             Files.delete(Paths.get(filePath));
+        }else{
+            throw new IOException("Image Not Found With ImageName = " + imageName);
         }
 
 

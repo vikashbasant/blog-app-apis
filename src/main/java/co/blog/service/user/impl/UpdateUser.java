@@ -12,6 +12,7 @@ import co.blog.util.BlogServiceType;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,9 +61,15 @@ public class UpdateUser implements BlogService {
         user.setUserAbout(uDTO.getUserAbout());
 
 
-
-        /*----Then Simply Save Updated User Into DB----*/
-        User sUser = userRepo.save(user);
+        User sUser = null;
+        try {
+            /*----Then Simply Save Updated User Into DB----*/
+            sUser = this.userRepo.save(user);
+        } catch (Exception e) {
+            if (e instanceof DataIntegrityViolationException) {
+                throw new DataIntegrityViolationException("Please Enter Unique EmailId");
+            }
+        }
 
 
         /*----Convert The uDTO to UserResponseDTO----*/

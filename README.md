@@ -151,4 +151,11 @@
 
     Step 4: Simply Run The Application.
 
-    
+#### Here is Collection Documentation of Postman: https://documenter.getpostman.com/view/19629540/2s93JzL13P
+
+### How can I support the developer ?
+    Star my Github repo ⭐
+    Create pull requests, submit bugs, suggest new features or documentation updates 🛠
+
+### Somethings wrong!!
+    If you find that something's wrong with this package, you can let me know by raising an issue on the GitHub issue tracker
